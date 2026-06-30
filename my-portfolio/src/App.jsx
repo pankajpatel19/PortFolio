@@ -7,7 +7,7 @@ import Hero from "./component/Hero";
 import NavBar from "./component/NavBar";
 import Project from "./component/Project";
 import Skill from "./component/Skill";
-import Experience from "./component/Experience";
+// import Experience from "./component/Experience"; // temporarily excluded from build
 import BackgroundCanvas from "./component/BackgroundCanvas";
 import CustomCursor from "./component/CustomCursor";
 import SplashScreen from "./component/SplashScreen";
@@ -33,7 +33,7 @@ function App() {
         <NavBar />
         <Hero />
         <About />
-        <Experience />
+        {/* <Experience /> */} {/* temporarily hidden — add back when ready */}
         <Skill />
         <Project />
         <Contact />
