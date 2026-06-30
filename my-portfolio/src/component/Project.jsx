@@ -1,224 +1,193 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Code2, Sparkles } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ExternalLink,
+  FolderOpen,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import ProjectCard from "./ProjectCard";
+import { projects } from "../data/projectsData";
 
 const Project = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "WandarLust",
-      description:
-        "Built a full-stack travel booking platform with user authentication, property listings, and booking workflows",
-      tech: ["ejs", "Tailwind", "Bootstrap", "Express", "Node.js", "MongoDB"],
-      github: "https://github.com/pankajpatel19/WandarLust",
-      demo: "https://wandar-lust-kappa.vercel.app",
-      gradient: "from-blue-500 to-cyan-500",
-      image: "wandarLust.webp",
-    },
-    {
-      id: 2,
-      title: "Home Appliance Service Store",
-      description:
-        "Full-stack application for appliance service booking and management. Complete workflow with user-friendly interface.",
-      tech: [
-        "React",
-        "Tailwind",
-        "Node",
-        "lucide-react",
-        "Express",
-        "JWT",
-        "leaflet",
-        "Redis",
-        "Rest API",
-      ],
-      github: "https://github.com/pankajpatel19/CoolServices",
-      demo: "https://cool-services.vercel.app/",
-      gradient: "from-green-500 to-emerald-500",
-      image: "/Logo2.png",
-    },
-    {
-      id: 3,
-      title: "Tenantify-Multi-Tenant-SaaS-Backend",
-      description:
-        "A production-ready multi-tenant SaaS backend built with Node.js, Express, MongoDB, and Redis, following real-world backend architecture and best practices.",
-      tech: [
-        "node.js",
-        "Express.js",
-        "Redis",
-        "MongoDB",
-        "Bullmq",
-        "Nodemailer",
-      ],
-      github:
-        "https://github.com/pankajpatel19/Tenantify-Multi-Tenant-SaaS-Backend",
-      demo: "https://dev-resources-demo.vercel.app",
-      gradient: "from-purple-500 to-pink-500",
-      image:
-        "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=500&q=80",
-    },
-  ];
+  const [filter, setFilter] = useState("All");
+  const [showAll, setShowAll] = useState(false);
+  const initialLimit = 3;
+
+  const categories = ["All", "Full Stack", "Backend"];
+
+  // Reset showAll when category changes to prevent weird pagination states
+  const handleFilterChange = (cat) => {
+    setFilter(cat);
+    setShowAll(false);
+  };
+
+  const handleToggleShowAll = () => {
+    if (showAll) {
+      setShowAll(false);
+      // Wait for exit transition to finish, then scroll smoothly back to projects section
+      setTimeout(() => {
+        const element = document.getElementById("projects");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 150);
+    } else {
+      setShowAll(true);
+    }
+  };
+
+  const filteredProjects =
+    filter === "All"
+      ? projects
+      : projects.filter((project) => project.category === filter);
+
+  const displayedProjects = showAll
+    ? filteredProjects
+    : filteredProjects.slice(0, initialLimit);
 
   return (
-    <div
+    <section
       id="projects"
-      className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 w-full min-h-screen pt-20 pb-20"
+      className="w-full min-h-screen py-24 relative overflow-hidden"
     >
-      <div className="max-w-screen-lg p-4 mx-auto flex flex-col justify-center w-full h-full">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="pb-8"
-        >
-          <p className="text-4xl sm:text-5xl font-bold inline border-b-4 border-cyan-500 text-white">
-            Projects
-          </p>
-          <p className="py-6 text-gray-400 text-lg">
-            Featured projects I've built from scratch with modern technologies
-          </p>
-        </motion.div>
+      {/* Background radial glow */}
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none" />
 
-        {/* Projects Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 sm:px-0">
-          {projects.map(
-            (
-              { id, title, description, tech, github, demo, gradient, image },
-              index,
-            ) => (
-              <motion.div
-                key={id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl overflow-hidden shadow-xl border border-slate-700 hover:border-cyan-500 flex flex-col transition-all duration-300 group relative"
-              >
-                {/* Project Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <motion.img
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                    src={image}
-                    alt={title}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Gradient Overlay */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-t ${gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}
-                  ></div>
-
-                  {/* Sparkle Icon */}
-                  <div className="absolute top-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/50 p-2 rounded-full backdrop-blur-sm">
-                    <Sparkles size={20} />
-                  </div>
-                </div>
-
-                {/* Gradient Top Bar */}
-                <div className={`h-1 bg-gradient-to-r ${gradient}`}></div>
-
-                {/* Project Info */}
-                <div className="p-6 flex-grow">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div
-                      className={`p-2 rounded-lg bg-gradient-to-br ${gradient} bg-opacity-10`}
-                    >
-                      <Code2 className="text-cyan-400" size={24} />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
-                      {title}
-                    </h3>
-                  </div>
-
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                    {description}
-                  </p>
-
-                  {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {tech.map((t, i) => (
-                      <motion.span
-                        key={t}
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: index * 0.2 + i * 0.1,
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={{ scale: 1.1 }}
-                        className="text-xs bg-slate-700 px-3 py-1.5 rounded-full text-cyan-400 uppercase tracking-wider font-semibold border border-slate-600 hover:border-cyan-500 transition-all duration-300"
-                      >
-                        {t}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex items-center justify-center border-t border-slate-700 bg-slate-900/50">
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    href={demo}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-1/2 px-6 py-3 duration-200 hover:bg-slate-800 text-center flex items-center justify-center gap-2 text-gray-300 hover:text-cyan-400 font-medium transition-all"
-                  >
-                    <ExternalLink size={18} />
-                    Demo
-                  </motion.a>
-                  <div className="h-12 w-[1px] bg-slate-700"></div>
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    href={github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-1/2 px-6 py-3 duration-200 hover:bg-slate-800 text-center flex items-center justify-center gap-2 text-gray-300 hover:text-cyan-400 font-medium transition-all"
-                  >
-                    <Github size={18} />
-                    Code
-                  </motion.a>
-                </div>
-
-                {/* Hover Glow Effect */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`}
-                ></div>
-              </motion.div>
-            ),
-          )}
+      <div className="max-w-screen-xl p-4 mx-auto flex flex-col justify-center w-full h-full z-10 relative">
+        {/* Header Section */}
+        <div className="flex flex-col gap-2 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2 text-cyan-400 text-sm font-semibold uppercase tracking-widest"
+          >
+            <Sparkles size={16} />
+            Showcase
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-5xl font-display font-black text-white"
+          >
+            Featured{" "}
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              Projects
+            </span>
+          </motion.h2>
+          <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mt-2" />
         </div>
 
-        {/* View More Section */}
+        {/* Filters */}
+        <div className="flex flex-wrap gap-2 justify-center md:justify-start mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => handleFilterChange(cat)}
+              className={`px-5 py-2.5 text-sm font-semibold rounded-xl border transition-all duration-300 relative overflow-hidden cursor-pointer ${
+                filter === cat
+                  ? "border-cyan-500 text-white bg-cyan-500/10 shadow-lg shadow-cyan-500/10"
+                  : "border-slate-800 text-gray-400 bg-slate-900/40 hover:text-white hover:border-slate-700"
+              }`}
+            >
+              {cat}
+              {filter === cat && (
+                <motion.div
+                  layoutId="activeProjectCategoryBorder"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10"
         >
-          <p className="text-gray-400 mb-4 text-lg">
-            Want to see more of my work?
+          <AnimatePresence mode="popLayout">
+            {displayedProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                layout
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 30, scale: 0.95 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 25,
+                  delay:
+                    showAll && index >= initialLimit
+                      ? (index - initialLimit) * 0.12
+                      : 0,
+                }}
+              >
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Show More / Show Less Toggle Button */}
+        {filteredProjects.length > initialLimit && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mb-16"
+          >
+            <motion.button
+              onClick={handleToggleShowAll}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 border border-slate-800 hover:border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900 text-cyan-400 text-sm font-semibold rounded-xl flex items-center gap-2 shadow-lg transition-all duration-300 cursor-pointer"
+            >
+              {showAll ? (
+                <>
+                  Show Less <ChevronUp size={16} />
+                </>
+              ) : (
+                <>
+                  Show More <ChevronDown size={16} />
+                </>
+              )}
+            </motion.button>
+          </motion.div>
+        )}
+
+        {/* GitHub stats link */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center"
+        >
+          <p className="text-gray-500 text-sm mb-4">
+            Interested in more repositories?
           </p>
           <motion.a
             href="https://github.com/pankajpatel19"
             target="_blank"
             rel="noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-all duration-300"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-slate-800 bg-slate-900/40 text-gray-300 text-sm font-semibold hover:border-slate-700 hover:text-white shadow-md transition-all duration-300 cursor-pointer"
           >
-            <Github size={24} />
-            View All Projects on GitHub
-            <ExternalLink size={20} />
+            <FolderOpen size={16} className="text-cyan-400" />
+            Explore GitHub Repositories
+            <ExternalLink size={14} className="text-gray-500" />
           </motion.a>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
