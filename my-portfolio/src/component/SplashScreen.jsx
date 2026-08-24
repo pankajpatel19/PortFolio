@@ -89,7 +89,7 @@ const SplashScreen = ({ onComplete }) => {
             transition={{ duration: 0.5, delay: 1.1 }}
             className="text-gray-500 text-sm tracking-[0.3em] uppercase font-semibold"
           >
-            MERN Stack Developer
+            Full Stack AI Developer
           </motion.p>
 
           {/* Loading bar */}

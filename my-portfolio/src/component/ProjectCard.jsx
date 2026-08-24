@@ -31,8 +31,12 @@ const ProjectCard = ({ project }) => {
         <motion.img
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.5 }}
-          src={image}
+          src={image || "/wandarLust.webp"}
           alt={title}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/wandarLust.webp";
+          }}
           className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
         />
 
@@ -86,25 +90,39 @@ const ProjectCard = ({ project }) => {
 
       {/* Bottom Action buttons */}
       <div className="flex items-center border-t border-slate-850/80 bg-slate-950/50">
-        <a
-          href={demo}
-          target="_blank"
-          rel="noreferrer"
-          className="w-1/2 py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
-        >
-          <ExternalLink size={15} />
-          Live Demo
-        </a>
-        <div className="h-10 w-[1px] bg-slate-850/80" />
-        <a
-          href={github}
-          target="_blank"
-          rel="noreferrer"
-          className="w-1/2 py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
-        >
-          <Github size={15} />
-          Source Code
-        </a>
+        {demo ? (
+          <>
+            <a
+              href={demo}
+              target="_blank"
+              rel="noreferrer"
+              className="w-1/2 py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
+            >
+              <ExternalLink size={15} />
+              Live Demo
+            </a>
+            <div className="h-10 w-[1px] bg-slate-850/80" />
+            <a
+              href={github}
+              target="_blank"
+              rel="noreferrer"
+              className="w-1/2 py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
+            >
+              <Github size={15} />
+              Source Code
+            </a>
+          </>
+        ) : (
+          <a
+            href={github}
+            target="_blank"
+            rel="noreferrer"
+            className="w-full py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
+          >
+            <Github size={15} />
+            View Source on GitHub
+          </a>
+        )}
       </div>
     </TiltCard>
   );

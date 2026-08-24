@@ -9,7 +9,7 @@ import { X, Download, ExternalLink, FileText } from "lucide-react";
  *   onClose {function} — callback to close the modal
  */
 const ResumeModal = ({ isOpen, onClose }) => {
-  const resumeUrl = "/Pankaj_Patel_FullStack_Developer_Resume.pdf";
+  const resumeUrl = "/Pankaj_Patel_Resume.pdf";
 
   // Close on Escape key
   React.useEffect(() => {
@@ -58,7 +58,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                 </div>
                 <div>
                   <h2 className="text-sm font-bold text-white leading-none">Pankaj Patel — Resume</h2>
-                  <p className="text-xs text-gray-500 mt-0.5">MERN Stack Developer</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Full Stack AI Developer</p>
                 </div>
               </div>
 
@@ -133,7 +133,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
             {/* Footer hint */}
             <div className="px-5 py-2.5 bg-slate-900/50 border-t border-slate-800 flex-shrink-0 flex items-center justify-between">
               <p className="text-[11px] text-slate-600">Press <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-500 text-[10px] font-mono">Esc</kbd> to close</p>
-              <p className="text-[11px] text-slate-600">Pankaj_Patel_FullStack_Developer_Resume.pdf</p>
+              <p className="text-[11px] text-slate-600">Pankaj_Patel_Resume.pdf</p>
             </div>
           </motion.div>
         </>

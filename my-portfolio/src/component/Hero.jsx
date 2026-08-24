@@ -229,10 +229,10 @@ const Hero = () => {
             I build modern <br />
             <TypingEffect
               texts={[
-                "MERN Applications",
-                "Scalable Backends",
-                "Full Stack Systems",
-                "RESTful APIs",
+                "Full Stack AI Apps",
+                "RAG & Semantic Search",
+                "Model Context Protocol (MCP)",
+                "Scalable Cloud Backends",
               ]}
               typingSpeed={80}
               deletingSpeed={40}
@@ -246,13 +246,12 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-gray-400 max-w-lg text-lg leading-relaxed mb-8 font-light"
           >
-            Specialized in crafting robust engineering solutions using{" "}
-            <span className="text-cyan-400 font-semibold">MongoDB</span>,{" "}
-            <span className="text-cyan-400 font-semibold">Express</span>,{" "}
-            <span className="text-cyan-400 font-semibold">React</span>, and{" "}
-            <span className="text-cyan-400 font-semibold">Node.js</span>.
-            Delivering high-performance, responsive applications with premium
-            visual styling.
+            Specialized in crafting intelligent AI-driven applications, RAG pipelines, and scalable full-stack architectures using{" "}
+            <span className="text-cyan-400 font-semibold">LangChain & Bedrock</span>,{" "}
+            <span className="text-cyan-400 font-semibold">Pinecone</span>,{" "}
+            <span className="text-cyan-400 font-semibold">Next.js & React</span>, and{" "}
+            <span className="text-cyan-400 font-semibold">Node.js & PostgreSQL</span>.
+            Delivering high-performance, autonomous, and production-grade solutions.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -283,7 +282,7 @@ const Hero = () => {
             </motion.a>
 
             <motion.a
-              href="/Pankaj_Patel_FullStack_Developer_Resume.pdf"
+              href="/Pankaj_Patel_Resume.pdf"
               download
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -432,7 +431,7 @@ const Hero = () => {
               <div className="relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800/80">
                 <img
                   src="/profilemain.png"
-                  alt="Pankaj Patel - Full Stack Developer"
+                  alt="Pankaj Patel - Full Stack AI Developer"
                   className="w-[280px] sm:w-[320px] h-[420px] aspect-square object-cover"
                   style={{ display: "block" }}
                 />
@@ -462,12 +461,12 @@ const Hero = () => {
               style={{ transform: "translateZ(25px)" }}
               className="absolute -top-4 -right-6 bg-slate-900 border border-slate-800 rounded-2xl px-4 py-2.5 shadow-xl flex items-center gap-2"
             >
-              <span className="text-2xl">⚡</span>
+              <span className="text-2xl">🤖</span>
               <div>
                 <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
-                  Stack
+                  Focus
                 </p>
-                <p className="text-xs font-bold text-white">MERN</p>
+                <p className="text-xs font-bold text-white">Full Stack AI</p>
               </div>
             </motion.div>
 
@@ -482,8 +481,8 @@ const Hero = () => {
               <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-0.5">
                 Building
               </p>
-              <p className="text-sm font-black text-purple-400">🚀 SaaS App</p>
-              <p className="text-[10px] text-gray-500">Next.js</p>
+              <p className="text-sm font-black text-purple-400">⚡ AI Agents</p>
+              <p className="text-[10px] text-gray-500">Next.js + LLMs</p>
             </motion.div>
           </ProfileCard3D>
         </motion.div>

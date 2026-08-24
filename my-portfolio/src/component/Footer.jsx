@@ -50,13 +50,13 @@ const Footer = () => {
   const contactDetails = [
     {
       icon: <Mail size={14} />,
-      text: "pankajpatelinter@gmail.com",
-      link: "mailto:pankajpatelinter@gmail.com",
+      text: "ppankajpatel348@gmail.com",
+      link: "mailto:ppankajpatel348@gmail.com",
     },
     {
       icon: <Phone size={14} />,
-      text: "+91 8511994480",
-      link: "tel:+918511994480",
+      text: "+91 9173731916",
+      link: "tel:+919173731916",
     },
     {
       icon: <MapPin size={14} />,
@@ -106,7 +106,7 @@ const Footer = () => {
               Pankaj Patel
             </h2>
             <p className="text-gray-400 text-sm leading-relaxed font-light">
-              MERN Stack Developer building high-fidelity web systems and responsive consumer solutions.
+              Full Stack AI Developer building intelligent web systems, agentic workflows, and modern cloud architectures.
             </p>
             <div className="flex items-center gap-2 text-cyan-400 text-xs font-semibold">
               <Code2 size={15} />
@@ -235,7 +235,7 @@ const Footer = () => {
               className="text-red-500 animate-pulse ml-0.5"
               fill="currentColor"
             />
-            and MERN stacks
+            and Modern AI Stacks
           </p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-cyan-400 transition-colors">Privacy Policy</a>

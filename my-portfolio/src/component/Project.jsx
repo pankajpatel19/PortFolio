@@ -15,7 +15,7 @@ const Project = () => {
   const [showAll, setShowAll] = useState(false);
   const initialLimit = 3;
 
-  const categories = ["All", "Full Stack", "Backend"];
+  const categories = ["All", "AI & Full Stack", "Full Stack", "Backend"];
 
   // Reset showAll when category changes to prevent weird pagination states
   const handleFilterChange = (cat) => {

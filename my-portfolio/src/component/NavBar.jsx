@@ -215,7 +215,7 @@ const Navbar = () => {
               {/* Bottom detail in mobile drawer */}
               <div className="border-t border-slate-900 pt-6">
                 <p className="text-xs text-gray-600">© 2026 Pankaj Patel</p>
-                <p className="text-xs text-cyan-500 font-medium mt-1">MERN Stack Developer</p>
+                <p className="text-xs text-cyan-500 font-medium mt-1">Full Stack AI Developer</p>
               </div>
             </motion.div>
           </>
