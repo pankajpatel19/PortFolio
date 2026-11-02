@@ -16,10 +16,16 @@ import {
   GitBranch,
   FileCode,
   Box,
+  Copy,
+  Check,
+  MapPin,
+  Sparkles,
 } from "lucide-react";
 import TypingEffect from "./TypingEffect";
-import FloatingGeometry from "./FloatingGeometry";
 import ResumeModal from "./ResumeModal";
+import Meteors from "./animations/Meteors";
+import BorderBeam from "./animations/BorderBeam";
+import MagneticButton from "./animations/MagneticButton";
 
 // Animated count-up number that triggers when scrolled into view
 const CountUp = ({ to, suffix = "", duration = 1800 }) => {
@@ -33,7 +39,7 @@ const CountUp = ({ to, suffix = "", duration = 1800 }) => {
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.round(eased * to));
       if (progress >= 1) clearInterval(timer);
     }, 16);
@@ -48,13 +54,13 @@ const CountUp = ({ to, suffix = "", duration = 1800 }) => {
   );
 };
 
-// 3D mouse-tracking tilt for the profile image frame
+// 3D mouse-tracking tilt for the profile card
 const ProfileCard3D = ({ children }) => {
   const cardRef = useRef(null);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
 
-  const springConfig = { damping: 20, stiffness: 150 };
+  const springConfig = { damping: 24, stiffness: 150 };
   const springRotateX = useSpring(rotateX, springConfig);
   const springRotateY = useSpring(rotateY, springConfig);
 
@@ -66,8 +72,8 @@ const ProfileCard3D = ({ children }) => {
     const cy = rect.top + rect.height / 2;
     const dx = (e.clientX - cx) / (rect.width / 2);
     const dy = (e.clientY - cy) / (rect.height / 2);
-    rotateX.set(-dy * 18);
-    rotateY.set(dx * 18);
+    rotateX.set(-dy * 10);
+    rotateY.set(dx * 10);
   };
 
   const handleMouseLeave = () => {
@@ -95,64 +101,67 @@ const ProfileCard3D = ({ children }) => {
 
 const Hero = () => {
   const [resumeOpen, setResumeOpen] = useState(false);
-  const sectionRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: -9999, y: -9999 });
+  const [activeSnippetTab, setActiveSnippetTab] = useState(0);
+  const [copied, setCopied] = useState(false);
 
-  const handleSectionMouseMove = (e) => {
-    const rect = sectionRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  const snippets = [
+    {
+      name: "ragPipeline.ts",
+      project: "Codebase RAG Assistant",
+      code: `// Amazon Titan v2 1024-dim Vector Search + Pinecone
+export async function queryCodebase(query: string, repoId: string) {
+  const embedding = await bedrock.invokeTitanEmbedding(query);
+  const matches = await pineconeIndex.query({
+    vector: embedding,
+    topK: 6,
+    filter: { repoId }
+  });
+  return synthesizeContext(matches, query);
+}`,
+    },
+    {
+      name: "restController.ts",
+      project: "Infinite Soft Tech (MERN Stack)",
+      code: `// REST API Controller with JWT Auth & MongoDB
+export const createResource = async (req: Request, res: Response) => {
+  const { title, payload } = req.body;
+  const newRecord = await ResourceModel.create({
+    title,
+    payload,
+    author: req.user.id
+  });
+  return res.status(201).json({ success: true, data: newRecord });
+};`,
+    },
+    {
+      name: "mcpHandler.ts",
+      project: "AI Gmail Assistant (MCP)",
+      code: `// Model Context Protocol tool execution with Zod
+server.tool("search_inbox", { query: z.string() }, async ({ query }) => {
+  const results = await gmail.users.messages.list({ q: query });
+  return formatConversationalMemory(results);
+});`,
+    },
+  ];
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(snippets[activeSnippetTab].code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSectionMouseLeave = () => setMousePos({ x: -9999, y: -9999 });
   const techStack = [
+    { icon: <Code2 size={18} />, name: "React.js", desc: "MERN Frontend" },
+    { icon: <Layers size={18} />, name: "Node.js", desc: "Backend Runtime" },
+    { icon: <Zap size={18} />, name: "Express.js", desc: "REST APIs" },
+    { icon: <Database size={18} />, name: "MongoDB", desc: "NoSQL Database" },
+    { icon: <FileCode size={18} />, name: "PostgreSQL", desc: "Prisma ORM" },
+    { icon: <Box size={18} />, name: "Next.js", desc: "React Framework" },
+    { icon: <FileCode size={18} />, name: "TypeScript", desc: "Type Safety" },
     {
-      icon: <Code2 size={22} />,
-      name: "React",
-      desc: "Interactive Frontend",
-      color: "hover:text-blue-400",
-    },
-    {
-      icon: <Database size={22} />,
-      name: "MongoDB",
-      desc: "NoSQL Database",
-      color: "hover:text-green-400",
-    },
-    {
-      icon: <Layers size={22} />,
-      name: "Node.js",
-      desc: "Server Runtime",
-      color: "hover:text-emerald-400",
-    },
-    {
-      icon: <Zap size={22} />,
-      name: "Express",
-      desc: "REST Web APIs",
-      color: "hover:text-yellow-400",
-    },
-    {
-      icon: <FileCode size={22} />,
-      name: "TypeScript",
-      desc: "Type-Safe JS",
-      color: "hover:text-blue-500",
-    },
-    {
-      icon: <Wind size={22} />,
-      name: "Tailwind",
-      desc: "Utility CSS",
-      color: "hover:text-sky-400",
-    },
-    {
-      icon: <GitBranch size={22} />,
-      name: "Git",
+      icon: <GitBranch size={18} />,
+      name: "Git / GitHub",
       desc: "Version Control",
-      color: "hover:text-orange-400",
-    },
-    {
-      icon: <Box size={22} />,
-      name: "Next.js",
-      desc: "React Framework",
-      color: "hover:text-white",
     },
   ];
 
@@ -161,330 +170,321 @@ const Hero = () => {
       icon: <Github size={18} />,
       href: "https://github.com/pankajpatel19",
       label: "GitHub",
-      color: "hover:text-white hover:border-white/30",
     },
     {
       icon: <Linkedin size={18} />,
       href: "https://linkedin.com/in/pankajpatel19",
       label: "LinkedIn",
-      color: "hover:text-blue-400 hover:border-blue-400/30",
     },
     {
       icon: <Twitter size={18} />,
       href: "https://twitter.com/pankajpatel19",
       label: "Twitter",
-      color: "hover:text-sky-400 hover:border-sky-400/30",
     },
   ];
 
   const stats = [
     { to: 10, suffix: "+", label: "Projects Built" },
     { to: 500, suffix: "+", label: "Git Commits" },
-    { to: 3, suffix: "+", label: "Happy Clients" },
+    { to: 8, suffix: ".41", label: "MCA CGPA (Top 5)" },
   ];
 
   return (
     <section
       id="home"
-      ref={sectionRef}
-      onMouseMove={handleSectionMouseMove}
-      onMouseLeave={handleSectionMouseLeave}
-      className="min-h-screen w-full flex items-center justify-center pt-20 relative overflow-hidden"
-      style={{ perspective: "1200px" }}
+      className="min-h-screen w-full flex items-center justify-center pt-24 pb-20 relative overflow-hidden bg-black bg-grid-subtle"
     >
-      {/* Cursor Spotlight — follows mouse */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, rgba(6,182,212,0.08) 0%, rgba(99,102,241,0.04) 40%, transparent 70%)`,
-        }}
-      />
-      {/* Ambient glow orbs */}
-      <div className="absolute top-1/4 left-[5%] w-[350px] h-[350px] bg-cyan-500/8 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-[5%] w-[400px] h-[400px] bg-purple-500/8 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-[60%] left-[40%] w-[250px] h-[250px] bg-blue-500/6 rounded-full blur-[100px] pointer-events-none" />
+      {/* Meteor Shower background effect (Aceternity UI style) */}
+      <Meteors number={16} />
 
-      {/* 3D Floating geometry shapes */}
-      <FloatingGeometry />
+      {/* Top-center light beam — Linear/Vercel style */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[320px] bg-white/[0.04] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[160px] bg-white/[0.07] rounded-full blur-[60px] pointer-events-none" />
 
-      <div className="max-w-screen-xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12 py-12 md:py-24 z-10 relative">
+      {/* Subtle ambient lighting */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[360px] bg-white/[0.02] rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-screen-xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-between gap-12 z-10 relative">
         {/* Left: Text Content */}
         <motion.div
-          initial={{ opacity: 0, x: -60 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-          className="flex flex-col justify-center w-full md:w-3/5 text-left"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-col justify-center w-full lg:w-7/12 text-left"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 w-fit mb-6 text-sm text-cyan-400 font-semibold shadow-inner"
-          >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            Hi, I'm Pankaj Patel 👋
-          </motion.div>
+          {/* Mobile-Only Cutout Photo: Positioned at the very top on mobile view */}
+          <div className="lg:hidden w-full flex justify-center mb-6 -mt-2">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="relative flex items-center justify-center"
+            >
+              <img
+                src="/profile_cutout.png"
+                alt="Pankaj Patel - Full Stack Developer"
+                className="w-[220px] sm:w-[260px] max-h-[310px] object-contain select-none"
+                style={{
+                  filter: "drop-shadow(0 15px 30px rgba(0, 0, 0, 0.95))",
+                }}
+              />
+            </motion.div>
+          </div>
 
-          <h1 className="text-4xl sm:text-6xl font-display font-black text-white leading-tight mb-4 tracking-tight">
-            I build modern <br />
-            <TypingEffect
-              texts={[
-                "Full Stack AI Apps",
-                "RAG & Semantic Search",
-                "Model Context Protocol (MCP)",
-                "Scalable Cloud Backends",
-              ]}
-              typingSpeed={80}
-              deletingSpeed={40}
-              delayBetween={2500}
-            />
+          {/* Engineering Monospace Label */}
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            <span className="font-mono text-[11px] text-zinc-400 font-semibold tracking-wider uppercase">
+              PANKAJ PATEL // FULL STACK DEVELOPER
+            </span>
+            <span className="text-zinc-600 font-mono text-[11px]">•</span>
+            <span className="flex items-center gap-1 font-mono text-[11px] text-zinc-400">
+              <MapPin size={11} className="text-zinc-500" />
+              Borivali, Mumbai · Ahmedabad
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl font-display font-black text-white leading-[1.12] mb-5 tracking-tight">
+            Full Stack Developer <br />
+            <span className="text-zinc-400">
+              <TypingEffect
+                texts={[
+                  "Backend-Focused & MERN Stack",
+                  "REST API & Database Design",
+                  "RAG Pipelines & Bedrock",
+                  "Model Context Protocol (MCP)",
+                ]}
+                typingSpeed={80}
+                deletingSpeed={40}
+                delayBetween={2400}
+              />
+            </span>
           </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-gray-400 max-w-lg text-lg leading-relaxed mb-8 font-light"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-zinc-300 max-w-xl text-base sm:text-lg leading-relaxed mb-8 font-light"
           >
-            Specialized in crafting intelligent AI-driven applications, RAG pipelines, and scalable full-stack architectures using{" "}
-            <span className="text-cyan-400 font-semibold">LangChain & Bedrock</span>,{" "}
-            <span className="text-cyan-400 font-semibold">Pinecone</span>,{" "}
-            <span className="text-cyan-400 font-semibold">Next.js & React</span>, and{" "}
-            <span className="text-cyan-400 font-semibold">Node.js & PostgreSQL</span>.
-            Delivering high-performance, autonomous, and production-grade solutions.
+            Specialized in building scalable web architectures and robust
+            backend services using{" "}
+            <span className="text-white font-medium">
+              Node.js, Express.js, React.js, and MongoDB / PostgreSQL (Prisma)
+            </span>
+            . Experienced in RAG pipelines with{" "}
+            <span className="text-white font-medium">
+              Amazon Bedrock & Pinecone
+            </span>
+            . Recently completed a Full Stack Developer Internship at{" "}
+            <span className="text-white font-medium underline underline-offset-4 decoration-zinc-500">
+              Infinite Soft Tech (MERN Stack)
+            </span>{" "}
+            (June 2026 – Sept 2026).
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons with Magnetic Spring Effect */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap gap-4 items-center mb-10"
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-wrap gap-3.5 items-center mb-10"
           >
-            <motion.a
-              href="#projects"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              whileHover={{
-                scale: 1.05,
-                y: -2,
-                boxShadow: "0 10px 30px rgba(34,211,238,0.3)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="group text-white px-7 py-3.5 flex items-center rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold shadow-lg shadow-cyan-500/20 transition-all duration-300"
-            >
-              Explore Projects
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-            </motion.a>
-
-            <motion.a
-              href="/Pankaj_Patel_Resume.pdf"
-              download
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-gray-300 hover:text-white px-5 py-3.5 flex items-center rounded-xl bg-slate-900/80 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all duration-300 shadow-md"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </motion.a>
-
-            <motion.button
-              onClick={() => setResumeOpen(true)}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-cyan-400 hover:text-white px-5 py-3.5 flex items-center rounded-xl bg-slate-900/80 hover:bg-slate-900 border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 shadow-md cursor-pointer"
-            >
-              <Eye className="w-4 h-4 mr-2" />
-              View Resume
-            </motion.button>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="flex items-center gap-3 mb-6"
-          >
-            <span className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
-              Connect
-            </span>
-            <div className="h-px w-6 bg-slate-700" />
-            {socialLinks.map((social) => (
+            <MagneticButton strength={0.3}>
               <motion.a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.12 }}
-                whileTap={{ scale: 0.95 }}
-                className={`p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 text-gray-400 ${social.color} transition-all duration-300 shadow-md`}
-                aria-label={social.label}
+                href="#projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("projects")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="relative group text-slate-950 px-6 py-3 flex items-center rounded-xl bg-white hover:bg-slate-100 font-semibold shadow-md transition-all text-sm overflow-hidden"
               >
-                {social.icon}
+                {/* Subtle shine sweep */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                <span className="relative z-10 flex items-center">
+                  Explore Projects
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </span>
               </motion.a>
-            ))}
+            </MagneticButton>
+
+            <MagneticButton strength={0.25}>
+              <motion.a
+                href="/Pankaj_Patel_Resume.pdf"
+                download
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="text-slate-300 hover:text-white px-5 py-3 flex items-center rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition-colors text-sm"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download Resume
+              </motion.a>
+            </MagneticButton>
+
+            <MagneticButton strength={0.25}>
+              <motion.button
+                onClick={() => setResumeOpen(true)}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="text-zinc-300 hover:text-white px-5 py-3 flex items-center rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-colors text-sm cursor-pointer"
+              >
+                <Eye className="w-4 h-4 mr-2 text-zinc-300" />
+                View Resume
+              </motion.button>
+            </MagneticButton>
           </motion.div>
+
+          {/* Social Links with Magnetic Pull */}
+          <div className="flex items-center gap-3 mb-8">
+            <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider font-semibold">
+              Connect:
+            </span>
+            {socialLinks.map((social) => (
+              <MagneticButton key={social.label} strength={0.4}>
+                <motion.a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -2, scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors block"
+                  aria-label={social.label}
+                >
+                  {social.icon}
+                </motion.a>
+              </MagneticButton>
+            ))}
+          </div>
 
           {/* Stats Strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex items-center gap-5 mb-10 px-5 py-3.5 rounded-2xl bg-slate-900/40 border border-slate-800/60 w-fit"
-          >
+          <div className="flex items-center gap-6 mb-10 px-5 py-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 w-fit">
             {stats.map((stat, i) => (
               <React.Fragment key={stat.label}>
                 <div className="text-center">
-                  <p className="text-xl font-black bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  <p className="text-xl font-bold text-white tracking-tight">
                     <CountUp to={stat.to} suffix={stat.suffix} />
                   </p>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
+                  <p className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
                     {stat.label}
                   </p>
                 </div>
                 {i < stats.length - 1 && (
-                  <div className="h-7 w-px bg-slate-700/80" />
+                  <div className="h-7 w-px bg-slate-800" />
                 )}
               </React.Fragment>
             ))}
-          </motion.div>
+          </div>
 
-          {/* 3D Tech Stack chips */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="flex flex-col gap-3"
-          >
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-              Core Stack Expertise
+          {/* Core Tech Stack */}
+          <div className="flex flex-col gap-2.5">
+            <p className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">
+              Core Tech Stack (MERN & Cloud)
             </p>
-            <div className="flex gap-3 flex-wrap">
-              {techStack.map((tech, index) => (
+            <div className="flex gap-2 flex-wrap">
+              {techStack.map((tech) => (
                 <motion.div
                   key={tech.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                  whileHover={{
-                    y: -6,
-                    rotateX: -10,
-                    scale: 1.08,
-                    boxShadow: "0 12px 24px rgba(34,211,238,0.2)",
-                    transition: { type: "spring", stiffness: 300, damping: 15 },
-                  }}
-                  style={{ transformStyle: "preserve-3d", perspective: 500 }}
-                  className={`flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/60 hover:bg-slate-900 transition-colors duration-300 cursor-pointer shadow-md group ${tech.color}`}
+                  whileHover={{ y: -2, scale: 1.04 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 20 }}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-colors shadow-sm cursor-default"
                   title={tech.desc}
                 >
-                  <span className="text-cyan-400 group-hover:rotate-[360deg] transition-transform duration-500">
-                    {tech.icon}
-                  </span>
-                  <span className="text-sm font-semibold text-gray-300 group-hover:text-current transition-colors">
+                  <span className="text-slate-400">{tech.icon}</span>
+                  <span className="text-xs font-medium text-slate-300">
                     {tech.name}
                   </span>
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </motion.div>
 
-        {/* Right: 3D Profile Image */}
+        {/* Right: Dual Interactive Showcase (Transparent Cutout Profile Card + Real Code Engine) */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, x: 60 }}
+          initial={{ opacity: 0, scale: 0.95, x: 30 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="w-full md:w-2/5 flex justify-center items-center"
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+          className="w-full lg:w-5/12 flex flex-col items-center gap-6"
         >
-          <ProfileCard3D>
-            {/* Outer glowing orbit ring */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 14, ease: "linear" }}
-              className="absolute -inset-6 rounded-full border border-dashed border-cyan-500/20 pointer-events-none"
-            />
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ repeat: Infinity, duration: 22, ease: "linear" }}
-              className="absolute -inset-10 rounded-full border border-dashed border-purple-500/15 pointer-events-none"
-            />
-
-            {/* Glowing halo */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500 via-blue-500 to-purple-600 rounded-2xl blur-[40px] opacity-20 group-hover:opacity-35 transition-opacity duration-700" />
-
-            {/* 3D-layered card frame */}
-            <div
-              className="relative rounded-2xl p-2.5 bg-slate-900 border border-slate-800 shadow-2xl"
-              style={{ transform: "translateZ(0px)" }}
-            >
-              {/* Shine border effect */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400/20 via-transparent to-purple-400/20 opacity-60" />
-              </div>
-
-              {/* Profile image */}
-              <div className="relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800/80">
+          {/* Desktop-Only Cutout Photo (Hidden on mobile because it's rendered at the top) */}
+          <div className="hidden lg:block w-full">
+            <ProfileCard3D>
+              <div className="relative flex items-center justify-center">
                 <img
-                  src="/profilemain.png"
-                  alt="Pankaj Patel - Full Stack AI Developer"
-                  className="w-[280px] sm:w-[320px] h-[420px] aspect-square object-cover"
-                  style={{ display: "block" }}
+                  src="/profile_cutout.png"
+                  alt="Pankaj Patel - Full Stack Developer"
+                  className="w-[280px] sm:w-[330px] max-h-[420px] object-contain transition-transform duration-500 hover:scale-105 select-none"
+                  style={{
+                    filter: "drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9))",
+                    display: "block",
+                  }}
                 />
+              </div>
+            </ProfileCard3D>
+          </div>
 
-                {/* 3D depth overlay on image */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/40 pointer-events-none" />
+          {/* Live Code Engine Widget with Magic UI Border Beam! */}
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] bg-[#0a0a0a] border border-zinc-800 rounded-xl overflow-hidden shadow-xl text-left">
+            {/* Luminous Animated Border Beam (Pure Monochrome White/Silver) */}
+            <BorderBeam
+              size={180}
+              duration={7}
+              colorFrom="#ffffff"
+              colorTo="#52525b"
+            />
+
+            {/* Header / Tabs */}
+            <div className="flex items-center justify-between px-3 py-2 bg-zinc-900 border-b border-zinc-800">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-600 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-700 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-800 inline-block" />
               </div>
 
-              {/* Floating "Available" badge — lifted via translateZ */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.9 }}
-                style={{ transform: "translateZ(30px)" }}
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white text-xs px-5 py-2.5 rounded-full font-bold shadow-lg shadow-cyan-500/25 flex items-center gap-2 whitespace-nowrap border border-cyan-400/30"
+              {/* Tabs */}
+              <div className="flex gap-1 overflow-x-auto text-[10px] font-mono">
+                {snippets.map((s, idx) => (
+                  <button
+                    key={s.name}
+                    onClick={() => setActiveSnippetTab(idx)}
+                    className={`px-2 py-0.5 rounded transition-colors cursor-pointer ${
+                      activeSnippetTab === idx
+                        ? "bg-white text-black font-semibold"
+                        : "text-zinc-400 hover:text-white"
+                    }`}
+                  >
+                    {s.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Copy button */}
+              <button
+                onClick={handleCopyCode}
+                className="text-zinc-400 hover:text-white transition-colors cursor-pointer p-1"
+                title="Copy snippet"
               >
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
-                Available for Projects
-              </motion.div>
+                {copied ? (
+                  <Check size={12} className="text-white" />
+                ) : (
+                  <Copy size={12} />
+                )}
+              </button>
             </div>
 
-            {/* Floating skill badge — top right */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.0, duration: 0.5 }}
-              style={{ transform: "translateZ(25px)" }}
-              className="absolute -top-4 -right-6 bg-slate-900 border border-slate-800 rounded-2xl px-4 py-2.5 shadow-xl flex items-center gap-2"
-            >
-              <span className="text-2xl">🤖</span>
-              <div>
-                <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
-                  Focus
-                </p>
-                <p className="text-xs font-bold text-white">Full Stack AI</p>
-              </div>
-            </motion.div>
-
-            {/* Currently Building badge — left side */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.15, duration: 0.5 }}
-              style={{ transform: "translateZ(20px)" }}
-              className="absolute top-1/3 -left-12 bg-slate-900 border border-slate-800 rounded-2xl px-3.5 py-2.5 shadow-xl"
-            >
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-0.5">
-                Building
+            {/* Code Body */}
+            <div className="p-3 font-mono text-[11px] leading-relaxed text-zinc-300 overflow-x-auto bg-black/95">
+              <p className="text-[10px] text-zinc-400 mb-1.5 font-semibold">
+                // Source: {snippets[activeSnippetTab].project}
               </p>
-              <p className="text-sm font-black text-purple-400">⚡ AI Agents</p>
-              <p className="text-[10px] text-gray-500">Next.js + LLMs</p>
-            </motion.div>
-          </ProfileCard3D>
+              <pre className="text-zinc-300 whitespace-pre">
+                <code>{snippets[activeSnippetTab].code}</code>
+              </pre>
+            </div>
+          </div>
         </motion.div>
       </div>
 
@@ -495,23 +495,22 @@ const Hero = () => {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-600 hover:text-cyan-400 cursor-pointer z-10 transition-colors duration-300 group"
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 cursor-pointer z-10 transition-colors"
         onClick={() =>
           document
             .getElementById("about")
             ?.scrollIntoView({ behavior: "smooth" })
         }
       >
-        <span className="text-[10px] uppercase tracking-[0.2em] font-semibold">
+        <span className="text-[10px] uppercase font-mono tracking-widest">
           Scroll
         </span>
         <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          className="group-hover:text-cyan-400 transition-colors duration-300"
+          animate={{ y: [0, 4, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
         >
-          <ChevronDown size={20} />
+          <ChevronDown size={16} />
         </motion.div>
       </motion.div>
     </section>

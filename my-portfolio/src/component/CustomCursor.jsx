@@ -70,7 +70,7 @@ const CustomCursor = () => {
     <>
       {/* Small inner dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 bg-cyan-400 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 w-2.5 h-2.5 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
         style={{
           x: cursorX,
           y: cursorY,
@@ -80,7 +80,7 @@ const CustomCursor = () => {
       />
       {/* Large trailing ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border border-cyan-400/80 rounded-full pointer-events-none z-[9998] hidden md:block"
+        className="fixed top-0 left-0 w-8 h-8 border border-white/80 rounded-full pointer-events-none z-[9998] hidden md:block"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -89,11 +89,11 @@ const CustomCursor = () => {
         }}
         animate={{
           scale: isHovered ? 1.8 : 1,
-          backgroundColor: isHovered ? "rgba(34, 211, 238, 0.15)" : "rgba(34, 211, 238, 0)",
-          borderColor: isHovered ? "rgba(168, 85, 247, 0.8)" : "rgba(34, 211, 238, 0.8)",
+          backgroundColor: isHovered ? "rgba(255, 255, 255, 0.12)" : "rgba(255, 255, 255, 0)",
+          borderColor: isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.8)",
           boxShadow: isHovered
-            ? "0 0 15px rgba(168, 85, 247, 0.5)"
-            : "0 0 0px rgba(34, 211, 238, 0)",
+            ? "0 0 15px rgba(255, 255, 255, 0.3)"
+            : "0 0 0px rgba(255, 255, 255, 0)",
         }}
         transition={{ type: "tween", duration: 0.15 }}
       />

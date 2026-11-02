@@ -1,381 +1,334 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TiltCard } from "./useTilt";
-import FloatingGeometry from "./FloatingGeometry";
 import {
   Code2,
   Server,
   Database,
-  Coffee,
   Layers,
   Wind,
   Table,
   GitBranch,
   Zap,
   Settings,
-  Share2,
   Code,
   Blocks,
   Terminal,
   Cpu,
-  Sparkles,
   Bot,
   Brain,
+  Search,
+  Cloud,
+  ShieldCheck,
+  Workflow,
 } from "lucide-react";
 
 const Skill = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const categories = ["All", "AI & LLMs", "Frontend", "Backend & DB", "Tools & Core"];
+  const categories = ["All", "Backend", "AI / ML", "Databases & Queues", "Frontend", "DevOps & Tools"];
 
   const skills = [
+    // Backend
     {
       id: 1,
-      title: "Model Context Protocol (MCP)",
-      category: "AI & LLMs",
-      level: "90%",
-      icon: <Brain size={36} />,
-      color: "from-cyan-500/20 to-blue-500/10 border-cyan-500/30 text-cyan-400 shadow-cyan-500/10",
-      glowColor: "rgba(6, 182, 212, 0.4)",
+      title: "Node.js & Express.js",
+      category: "Backend",
+      level: "92%",
+      icon: <Server size={26} />,
+      detail: "REST API Design, Routing, Controllers, CRUD",
     },
     {
       id: 2,
-      title: "LangChain & RAG Pipelines",
-      category: "AI & LLMs",
-      level: "92%",
-      icon: <Bot size={36} />,
-      color: "from-purple-500/20 to-pink-500/10 border-purple-500/30 text-purple-400 shadow-purple-500/10",
-      glowColor: "rgba(168, 85, 247, 0.4)",
+      title: "JWT & RBAC Authentication",
+      category: "Backend",
+      level: "90%",
+      icon: <ShieldCheck size={26} />,
+      detail: "Role-Based Access, Session Security, Better-Auth",
     },
     {
       id: 3,
-      title: "Amazon Bedrock & Groq",
-      category: "AI & LLMs",
-      level: "88%",
-      icon: <Cpu size={36} />,
-      color: "from-orange-500/20 to-amber-500/10 border-orange-500/30 text-orange-400 shadow-orange-500/10",
-      glowColor: "rgba(249, 115, 22, 0.4)",
+      title: "REST API Architecture",
+      category: "Backend",
+      level: "94%",
+      icon: <Blocks size={26} />,
+      detail: "Stateless Endpoints, Error Handling, Zod Validation",
     },
+
+    // AI / ML
     {
       id: 4,
-      title: "Pinecone Vector DB",
-      category: "AI & LLMs",
-      level: "88%",
-      icon: <Database size={36} />,
-      color: "from-indigo-500/20 to-purple-500/10 border-indigo-500/30 text-indigo-400 shadow-indigo-500/10",
-      glowColor: "rgba(99, 102, 241, 0.4)",
+      title: "Model Context Protocol (MCP)",
+      category: "AI / ML",
+      level: "90%",
+      icon: <Brain size={26} />,
+      detail: "Agentic Tool Handlers, Conversational Memory, Groq",
     },
     {
       id: 5,
-      title: "React.js & Next.js",
-      category: "Frontend",
+      title: "LangChain & RAG Pipelines",
+      category: "AI / ML",
       level: "92%",
-      icon: <Code2 size={36} />,
-      color: "from-blue-500/20 to-cyan-500/10 border-blue-500/30 text-blue-400 shadow-blue-500/10",
-      glowColor: "rgba(59, 130, 246, 0.4)",
+      icon: <Bot size={26} />,
+      detail: "Structural AST Chunking, Context Injection, Reranking",
     },
     {
       id: 6,
-      title: "TypeScript & JavaScript",
-      category: "Frontend",
-      level: "90%",
-      icon: <Layers size={36} />,
-      color: "from-sky-500/20 to-blue-500/10 border-sky-500/30 text-sky-400 shadow-sky-500/10",
-      glowColor: "rgba(14, 165, 233, 0.4)",
+      title: "Amazon Bedrock & Titan v2",
+      category: "AI / ML",
+      level: "88%",
+      icon: <Cpu size={26} />,
+      detail: "1024-dimensional Semantic Embeddings Generation",
     },
     {
       id: 7,
-      title: "Tailwind CSS",
-      category: "Frontend",
-      level: "95%",
-      icon: <Wind size={36} />,
-      color: "from-cyan-500/20 to-sky-500/10 border-cyan-500/30 text-cyan-400 shadow-cyan-500/10",
-      glowColor: "rgba(34, 211, 238, 0.4)",
+      title: "Pinecone Cloud Vector DB",
+      category: "AI / ML",
+      level: "88%",
+      icon: <Database size={26} />,
+      detail: "Vector Namespaces, Similarity Search, Sub-second queries",
     },
+
+    // Databases & Queues
     {
       id: 8,
-      title: "TanStack Query",
-      category: "Frontend",
-      level: "85%",
-      icon: <Code size={36} />,
-      color: "from-rose-500/20 to-red-500/10 border-rose-500/30 text-rose-400 shadow-rose-500/10",
-      glowColor: "rgba(244, 63, 94, 0.4)",
+      title: "MongoDB & Mongoose",
+      category: "Databases & Queues",
+      level: "90%",
+      icon: <Database size={26} />,
+      detail: "NoSQL Schema Design, Queries, Aggregation Pipelines",
     },
     {
       id: 9,
-      title: "Node.js & Express.js",
-      category: "Backend & DB",
-      level: "92%",
-      icon: <Server size={36} />,
-      color: "from-green-500/20 to-emerald-500/10 border-green-500/30 text-green-400 shadow-green-500/10",
-      glowColor: "rgba(16, 185, 129, 0.4)",
+      title: "PostgreSQL & Prisma ORM",
+      category: "Databases & Queues",
+      level: "88%",
+      icon: <Table size={26} />,
+      detail: "Relational Modeling, Migrations, Type-Safe Queries",
     },
     {
       id: 10,
-      title: "PostgreSQL & Prisma ORM",
-      category: "Backend & DB",
+      title: "MySQL",
+      category: "Databases & Queues",
       level: "85%",
-      icon: <Table size={36} />,
-      color: "from-blue-600/20 to-indigo-500/10 border-blue-500/30 text-blue-400 shadow-blue-500/10",
-      glowColor: "rgba(59, 130, 246, 0.4)",
+      icon: <Table size={26} />,
+      detail: "Relational Schemas, Constraints, Joins & Indexing",
     },
     {
       id: 11,
-      title: "MongoDB & Mongoose",
-      category: "Backend & DB",
-      level: "88%",
-      icon: <Database size={36} />,
-      color: "from-emerald-500/20 to-green-500/10 border-emerald-500/30 text-emerald-400 shadow-emerald-500/10",
-      glowColor: "rgba(52, 211, 153, 0.4)",
+      title: "Redis, BullMQ & Inngest",
+      category: "Databases & Queues",
+      level: "86%",
+      icon: <Zap size={26} />,
+      detail: "Asynchronous Background Jobs, Rate Limiting, Caching",
     },
+
+    // Frontend
     {
       id: 12,
-      title: "Redis, BullMQ & Inngest",
-      category: "Backend & DB",
-      level: "85%",
-      icon: <Zap size={36} />,
-      color: "from-red-500/20 to-rose-500/10 border-red-500/30 text-red-400 shadow-red-500/10",
-      glowColor: "rgba(239, 68, 68, 0.4)",
+      title: "React.js & Next.js",
+      category: "Frontend",
+      level: "92%",
+      icon: <Code2 size={26} />,
+      detail: "Reusable Components, Event-Driven Pages, SSR",
     },
     {
       id: 13,
-      title: "Docker & AWS (EC2, S3)",
-      category: "Tools & Core",
-      level: "78%",
-      icon: <Settings size={36} />,
-      color: "from-violet-500/20 to-purple-500/10 border-violet-500/30 text-violet-400 shadow-violet-500/10",
-      glowColor: "rgba(139, 92, 246, 0.4)",
+      title: "TanStack Query & Tailwind CSS",
+      category: "Frontend",
+      level: "90%",
+      icon: <Wind size={26} />,
+      detail: "Server State Sync, Utility-First Responsive Styling",
     },
     {
       id: 14,
-      title: "Git, GitHub & Postman",
-      category: "Tools & Core",
-      level: "90%",
-      icon: <GitBranch size={36} />,
-      color: "from-purple-500/20 to-indigo-500/10 border-purple-500/30 text-purple-400 shadow-purple-500/10",
-      glowColor: "rgba(168, 85, 247, 0.4)",
+      title: "HTML5 & CSS3",
+      category: "Frontend",
+      level: "95%",
+      icon: <Code size={26} />,
+      detail: "Semantic Markup, Responsive Layouts, Accessibility",
     },
+
+    // DevOps & Tools / Languages
     {
       id: 15,
-      title: "Python, Java & DSA",
-      category: "Tools & Core",
-      level: "82%",
-      icon: <Terminal size={36} />,
-      color: "from-amber-500/20 to-orange-500/10 border-amber-500/30 text-amber-400 shadow-amber-500/10",
-      glowColor: "rgba(245, 158, 11, 0.4)",
+      title: "JavaScript (Primary) & TypeScript",
+      category: "DevOps & Tools",
+      level: "94%",
+      icon: <Layers size={26} />,
+      detail: "ES6+, Async/Await, Strict Typing, Type Definitions",
     },
     {
       id: 16,
-      title: "REST APIs, Zod & Auth",
-      category: "Backend & DB",
-      level: "92%",
-      icon: <Blocks size={36} />,
-      color: "from-indigo-500/20 to-blue-500/10 border-indigo-500/30 text-indigo-400 shadow-indigo-500/10",
-      glowColor: "rgba(99, 102, 241, 0.4)",
+      title: "Docker, Git & GitHub",
+      category: "DevOps & Tools",
+      level: "88%",
+      icon: <GitBranch size={26} />,
+      detail: "Containerization, Branching, PRs, Code Reviews",
+    },
+    {
+      id: 17,
+      title: "Postman & Zod",
+      category: "DevOps & Tools",
+      level: "90%",
+      icon: <Settings size={26} />,
+      detail: "API Testing, Automated Validation, Schema Inference",
+    },
+    {
+      id: 18,
+      title: "Java, C & DSA",
+      category: "DevOps & Tools",
+      level: "85%",
+      icon: <Terminal size={26} />,
+      detail: "Algorithms, Problem Solving, OOP Paradigms",
+    },
+    {
+      id: 19,
+      title: "AWS Cloud (EC2, S3, RDS, IAM)",
+      category: "DevOps & Tools",
+      level: "80%",
+      icon: <Cloud size={26} />,
+      detail: "Actively Learning Cloud Infrastructure & VPC",
     },
   ];
 
-  const filteredSkills =
-    activeCategory === "All"
-      ? skills
-      : skills.filter((skill) => skill.category === activeCategory);
+  const filteredSkills = skills.filter((skill) => {
+    const matchesCategory =
+      activeCategory === "All" || skill.category === activeCategory;
+    const matchesSearch =
+      skill.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      skill.detail.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      skill.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <section
-      id="skills"
-      className="w-full min-h-screen py-24 relative overflow-hidden"
-    >
-      {/* Background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-[8%] w-[200px] h-[200px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/3 right-[5%] w-[180px] h-[180px] bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
-
-      {/* 3D Floating decorative shapes */}
-      <motion.div
-        className="absolute top-[10%] right-[4%] pointer-events-none"
-        animate={{ rotate: [0, 360], y: [0, -20, 0] }}
-        transition={{ rotate: { repeat: Infinity, duration: 16, ease: "linear" }, y: { repeat: Infinity, duration: 5, ease: "easeInOut" } }}
-      >
-        <div style={{ width: 60, height: 60, border: "1.5px solid rgba(34,211,238,0.2)", transform: "perspective(150px) rotateX(45deg) rotateY(45deg)", boxShadow: "0 0 15px rgba(34,211,238,0.15), inset 0 0 10px rgba(34,211,238,0.05)", borderRadius: 4 }} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[12%] left-[3%] pointer-events-none"
-        animate={{ rotate: [0, -360], y: [0, 15, 0] }}
-        transition={{ rotate: { repeat: Infinity, duration: 22, ease: "linear" }, y: { repeat: Infinity, duration: 6, ease: "easeInOut" } }}
-      >
-        <div style={{ width: 45, height: 45, border: "1.5px solid rgba(168,85,247,0.25)", transform: "perspective(120px) rotateX(60deg) rotateY(30deg)", boxShadow: "0 0 12px rgba(168,85,247,0.2)", borderRadius: 4 }} />
-      </motion.div>
-      <motion.div
-        className="absolute top-[55%] right-[2%] pointer-events-none"
-        animate={{ rotate: [0, 360] }}
-        transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-      >
-        <div style={{ width: 80, height: 80, border: "1.5px dashed rgba(99,102,241,0.15)", borderRadius: "50%", transform: "perspective(100px) rotateX(70deg)" }} />
-      </motion.div>
-
-      <div className="max-w-screen-xl mx-auto px-6 flex flex-col justify-center w-full h-full text-white">
-        
+    <section id="skills" className="w-full py-24 bg-[#07080b] text-white relative border-t border-zinc-900">
+      <div className="max-w-screen-xl mx-auto px-6 flex flex-col justify-center w-full">
         {/* Header Section */}
-        <div className="flex flex-col gap-2 mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-2 text-cyan-400 text-sm font-semibold uppercase tracking-widest"
-          >
-            <Sparkles size={16} />
-            Abilities
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-5xl font-display font-black text-white"
-          >
-            Technical <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Skills</span>
-          </motion.h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mt-2" />
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col gap-2 mb-10"
+        >
+          <div className="font-mono text-[11px] text-zinc-400 font-semibold tracking-wider uppercase">
+            04 // TECHNICAL ARSENAL // RESUME SKILLS MATRIX
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
+            Technical Skills
+          </h2>
+          <div className="w-12 h-1 bg-white rounded-full mt-1" />
+        </motion.div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap gap-2.5 justify-center md:justify-start mb-10">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2.5 text-sm font-semibold rounded-xl border transition-all duration-300 relative overflow-hidden cursor-pointer ${
-                activeCategory === category
-                  ? "border-cyan-500 text-white bg-cyan-500/10 shadow-lg shadow-cyan-500/10"
-                  : "border-slate-800 text-gray-400 bg-slate-900/40 hover:text-white hover:border-slate-700"
-              }`}
-            >
-              {category}
-              {activeCategory === category && (
-                <motion.div
-                  layoutId="activeSkillCategoryBorder"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
+        {/* Filter Controls & Live Search Bar */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8">
+          {/* Category Filters */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-3.5 py-1.5 text-xs font-mono font-medium rounded-lg border transition-all cursor-pointer ${
+                  activeCategory === category
+                    ? "border-white text-black bg-white"
+                    : "border-zinc-800 text-zinc-400 bg-zinc-900/40 hover:text-white hover:border-zinc-700"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-full md:w-64">
+            <Search size={14} className="absolute left-3 top-2.5 text-zinc-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search skills (e.g. MongoDB, Bedrock)..."
+              className="w-full pl-9 pr-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-700"
+            />
+          </div>
         </div>
 
         {/* Skills Grid */}
-        <motion.div
-          layout
-          className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mb-16"
-        >
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           <AnimatePresence mode="popLayout">
             {filteredSkills.map((skill) => (
               <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 key={skill.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
-                <TiltCard
-                  options={{ maxTilt: 18, perspective: 700, glareOpacity: 0.12, scale: 1.04 }}
-                  className={`p-6 rounded-2xl border bg-slate-900/45 backdrop-blur-sm shadow-md transition-shadow duration-300 relative overflow-hidden group flex flex-col justify-between h-full ${skill.color}`}
-                  style={{ boxShadow: `0 0 0 ${skill.glowColor}` }}
-                >
-                  {/* Micro glow orb inside card */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 rounded-full blur-lg group-hover:scale-[2] transition-transform duration-700 pointer-events-none" />
-
-                  {/* Depth accent — lifted z layer */}
-                  <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ background: `radial-gradient(circle at 70% 20%, ${skill.glowColor}, transparent 65%)` }}
-                  />
-
-                  <div style={{ transform: "translateZ(20px)" }}>
-                    <div className="flex items-center justify-between mb-4">
-                      <motion.div
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                        className="group-hover:scale-110 transition-transform duration-300"
-                      >
+                <div className="p-5 rounded-xl border border-zinc-800/90 bg-zinc-950 hover:border-zinc-700 hover:bg-zinc-900 transition-all shadow-sm flex flex-col justify-between h-full group">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-zinc-300 group-hover:scale-110 transition-transform">
                         {skill.icon}
-                      </motion.div>
-                      <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-                        {skill.category.split(" ")[0]}
+                      </span>
+                      <span className="text-[10px] font-mono tracking-wider text-zinc-500 uppercase">
+                        {skill.category}
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-lg text-white mb-2 group-hover:text-cyan-400 transition-colors">
+                    <h3 className="font-bold text-sm sm:text-base text-white mb-1 group-hover:text-white transition-colors">
                       {skill.title}
                     </h3>
+                    <p className="text-xs text-zinc-400 leading-relaxed font-light mb-3">
+                      {skill.detail}
+                    </p>
                   </div>
 
-                  {/* Skill Level bar */}
-                  <div className="mt-4" style={{ transform: "translateZ(10px)" }}>
-                    <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-xs font-semibold text-gray-500">Proficiency</span>
-                      <span className="text-xs font-bold text-cyan-400">{skill.level}</span>
+                  {/* Level progress bar */}
+                  <div className="mt-2">
+                    <div className="flex justify-between items-center mb-1 text-[11px] font-mono">
+                      <span className="text-zinc-500">Proficiency</span>
+                      <span className="text-zinc-300 font-semibold">{skill.level}</span>
                     </div>
-                    <div className="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                    <div className="w-full h-1 bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: skill.level }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-                        className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+                        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                        className="h-full bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]"
                       />
                     </div>
                   </div>
-                </TiltCard>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-        <TiltCard
-          options={{ maxTilt: 6, perspective: 1200, glareOpacity: 0.07, scale: 1.01 }}
-          className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/60 to-slate-950 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden group"
-        >
-          {/* Subtle decoration lines */}
-          <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-tr from-cyan-500/10 to-transparent blur-2xl rounded-full" />
-          
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 flex-shrink-0 animate-pulse">
-              <Cpu size={24} />
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-white mb-1">
-                Continuous Knowledge Acquisition
-              </h4>
-              <p className="text-gray-400 text-sm leading-relaxed max-w-md">
-                I am regularly adding new layers to my skill set. Currently exploring deployment architectures, Docker containers, and CI/CD pipelines.
-              </p>
-            </div>
+        {/* Bottom CTA Banner */}
+        <div className="p-6 sm:p-7 rounded-2xl bg-zinc-950 border border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
+          <div>
+            <h4 className="text-base font-bold text-white mb-1">
+              Currently Expanding: Cloud Infrastructure & AWS Architecture
+            </h4>
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-xl">
+              Deepening knowledge in AWS services (EC2, S3, IAM, RDS, CloudWatch, VPC) and advanced Model Context Protocol (MCP) server integrations.
+            </p>
           </div>
 
-          <motion.a
+          <a
             href="#projects"
             onClick={(e) => {
               e.preventDefault();
               document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
             }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold rounded-xl shadow-lg shadow-cyan-500/10 hover:shadow-cyan-400/30 transition-all duration-300 shrink-0 cursor-pointer"
+            className="px-5 py-2.5 bg-white text-zinc-950 text-xs font-semibold uppercase tracking-wider rounded-lg shadow-sm hover:bg-zinc-200 transition-colors shrink-0"
           >
-            Check Project Implementation
-          </motion.a>
-        </TiltCard>
-        </motion.div>
-
+            Inspect Projects
+          </a>
+        </div>
       </div>
     </section>
   );

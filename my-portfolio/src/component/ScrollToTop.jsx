@@ -33,13 +33,18 @@ const ScrollToTop = () => {
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 text-cyan-400 hover:text-cyan-300 flex items-center justify-center shadow-xl cursor-pointer backdrop-blur-sm transition-colors duration-300 group"
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-zinc-400 text-white hover:text-white flex items-center justify-center shadow-xl cursor-pointer backdrop-blur-sm transition-colors duration-300 group"
           whileHover={{ scale: 1.1, y: -3 }}
           whileTap={{ scale: 0.9 }}
         >
           {/* Glow on hover */}
-          <span className="absolute inset-0 rounded-xl bg-cyan-500/0 group-hover:bg-cyan-500/10 transition-colors duration-300" />
+          <span className="absolute inset-0 rounded-xl bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
           <ArrowUp size={18} className="relative z-10 group-hover:-translate-y-0.5 transition-transform duration-300" />
+
+          {/* Tooltip on hover */}
+          <span className="absolute -top-9 right-0 px-2.5 py-1 rounded-md bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-zinc-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-lg">
+            Back to top ↑
+          </span>
         </motion.button>
       )}
     </AnimatePresence>

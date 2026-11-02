@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { Menu, X, ArrowUpRight, Terminal } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ onOpenCommandPalette }) => {
   const [nav, setNav] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
@@ -26,15 +26,10 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Background shift on scroll
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 40);
 
       // Scroll Spy logic
-      const scrollPosition = window.scrollY + 200; // Offset for accuracy
+      const scrollPosition = window.scrollY + 220;
       for (const item of links) {
         const el = document.getElementById(item.link);
         if (el) {
@@ -52,41 +47,34 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 w-full h-20 z-50 transition-all duration-300 ${
+    <nav
+      className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 shadow-2xl shadow-cyan-950/10"
-          : "bg-transparent border-b border-transparent"
+          ? "bg-black/90 backdrop-blur-md border-b border-zinc-850 shadow-md shadow-black/40"
+          : "bg-black/70 backdrop-blur-sm border-b border-zinc-900"
       }`}
     >
       {/* Scroll Progress Bar */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 origin-left"
+        className="absolute top-0 left-0 right-0 h-[2px] bg-white origin-left"
         style={{ scaleX }}
       />
 
-      <div className="max-w-screen-xl mx-auto h-full px-6 flex justify-between items-center">
+      <div className="max-w-screen-xl mx-auto h-16 px-6 flex justify-between items-center">
         {/* Logo */}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center"
-        >
-          <a href="#home" className="flex items-center gap-2 group">
-            <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20 group-hover:rotate-12 transition-transform duration-300">
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+          <a href="#home" className="flex items-center gap-2.5 group">
+            <span className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-750 flex items-center justify-center font-bold text-white text-xs shadow-sm group-hover:border-white/50 transition-colors">
               P
             </span>
-            <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent group-hover:text-cyan-400 transition-colors">
-              Pankaj
+            <span className="text-base font-bold text-white tracking-tight">
+              Pankaj<span className="text-zinc-400">.</span>
             </span>
           </a>
         </motion.div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-2">
+        <ul className="hidden md:flex items-center gap-1">
           {links.map(({ id, link }) => {
             const isActive = activeSection === link;
             return (
@@ -95,19 +83,27 @@ const Navbar = () => {
                   href={`#${link}`}
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById(link)?.scrollIntoView({ behavior: "smooth" });
+                    document
+                      .getElementById(link)
+                      ?.scrollIntoView({ behavior: "smooth" });
                     setActiveSection(link);
                   }}
-                  className={`px-4 py-2 capitalize font-medium text-sm rounded-lg transition-colors relative block hover:text-cyan-400 ${
-                    isActive ? "text-cyan-400" : "text-gray-400"
+                  className={`px-3 py-1.5 capitalize text-xs font-mono font-medium rounded-lg transition-colors relative block ${
+                    isActive
+                      ? "text-white font-semibold"
+                      : "text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
                   {link}
                   {isActive && (
                     <motion.span
                       layoutId="activeNavBackground"
-                      className="absolute inset-0 bg-slate-900 border border-slate-800 rounded-lg -z-10 shadow-inner"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      className="absolute inset-0 bg-zinc-900 border border-zinc-800 rounded-lg -z-10 shadow-sm"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </a>
@@ -115,113 +111,140 @@ const Navbar = () => {
             );
           })}
 
-          {/* Call to Action Header Button */}
+          {/* Quick HUD Trigger */}
+          {onOpenCommandPalette && (
+            <button
+              onClick={onOpenCommandPalette}
+              className="ml-2 px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors flex items-center gap-1 text-xs font-mono cursor-pointer"
+              title="Command Palette (Ctrl+K)"
+            >
+              <Terminal size={12} className="text-zinc-300" />
+              <span className="text-[11px]">HUD</span>
+              <kbd className="text-[9px] bg-zinc-800 px-1 py-0.2 rounded text-zinc-400 ml-0.5">
+                ⌘K
+              </kbd>
+            </button>
+          )}
+
+          {/* CTA Header Button */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="ml-4"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="ml-2"
           >
             <a
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setActiveSection("contact");
               }}
-              className="px-4 py-2 text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-lg text-white shadow-md hover:shadow-cyan-400/20 flex items-center gap-1.5 transition-all duration-300"
+              className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider bg-white text-zinc-950 hover:bg-zinc-200 rounded-lg shadow-sm flex items-center gap-1 transition-colors"
             >
               Let's Talk
-              <ArrowUpRight size={14} />
+              <ArrowUpRight size={13} />
             </a>
           </motion.div>
         </ul>
 
         {/* Mobile Menu Icon */}
-        <motion.div
-          onClick={() => setNav(!nav)}
-          whileTap={{ scale: 0.9 }}
-          className="cursor-pointer z-50 text-gray-400 md:hidden hover:text-cyan-400 transition-colors p-2 bg-slate-900 border border-slate-800 rounded-xl"
-        >
-          {nav ? <X size={22} /> : <Menu size={22} />}
-        </motion.div>
+        <div className="flex items-center gap-2 md:hidden">
+          {onOpenCommandPalette && (
+            <button
+              onClick={onOpenCommandPalette}
+              className="p-2 text-zinc-300 hover:text-white bg-zinc-900 border border-zinc-800 rounded-lg text-xs font-mono flex items-center gap-1"
+            >
+              <Terminal size={14} className="text-zinc-300" />
+              ⌘K
+            </button>
+          )}
+          <button
+            onClick={() => setNav(!nav)}
+            className="cursor-pointer text-zinc-300 hover:text-white transition-colors p-2 bg-zinc-900 border border-zinc-800 rounded-lg"
+            aria-label="Toggle Navigation"
+          >
+            {nav ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {nav && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md z-40 md:hidden"
+              className="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 md:hidden"
               onClick={() => setNav(false)}
             />
 
-            {/* Mobile Navigation Drawer */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 w-[280px] h-screen bg-slate-950/95 border-l border-slate-900 z-50 flex flex-col justify-between p-8 md:hidden"
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+              className="fixed top-0 right-0 w-[270px] h-screen bg-[#0b0c13] border-l border-slate-800 z-50 flex flex-col justify-between p-6 md:hidden text-white"
             >
-              <div className="flex flex-col gap-8 mt-16">
-                <div className="border-b border-slate-900 pb-4">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+              <div className="flex flex-col gap-6 mt-10">
+                <div className="border-b border-slate-800 pb-3 flex items-center justify-between">
+                  <p className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-widest">
                     Navigation
                   </p>
+                  <button
+                    onClick={() => setNav(false)}
+                    className="text-slate-400 hover:text-white"
+                  >
+                    <X size={18} />
+                  </button>
                 </div>
-                <ul className="flex flex-col gap-4">
-                  {links.map(({ id, link }, index) => {
+                <ul className="flex flex-col gap-2">
+                  {links.map(({ id, link }) => {
                     const isActive = activeSection === link;
                     return (
-                      <motion.li
-                        key={id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
-                        transition={{ duration: 0.2, delay: index * 0.05 }}
-                      >
+                      <li key={id}>
                         <a
                           href={`#${link}`}
                           onClick={(e) => {
                             e.preventDefault();
                             setNav(false);
-                            document.getElementById(link)?.scrollIntoView({ behavior: "smooth" });
+                            document
+                              .getElementById(link)
+                              ?.scrollIntoView({ behavior: "smooth" });
                             setActiveSection(link);
                           }}
-                          className={`text-2xl font-semibold capitalize flex items-center justify-between group py-2 ${
+                          className={`text-base font-medium capitalize flex items-center justify-between py-2 px-3 rounded-lg transition-colors ${
                             isActive
-                              ? "text-cyan-400"
-                              : "text-gray-400 hover:text-white"
+                              ? "text-white bg-slate-800 font-semibold"
+                              : "text-slate-400 hover:text-white hover:bg-slate-900"
                           }`}
                         >
                           {link}
-                          <span
-                            className={`w-2 h-2 rounded-full bg-cyan-400 scale-0 group-hover:scale-100 transition-transform ${
-                              isActive ? "scale-100" : ""
-                            }`}
-                          />
+                          {isActive && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          )}
                         </a>
-                      </motion.li>
+                      </li>
                     );
                   })}
                 </ul>
               </div>
 
-              {/* Bottom detail in mobile drawer */}
-              <div className="border-t border-slate-900 pt-6">
-                <p className="text-xs text-gray-600">© 2026 Pankaj Patel</p>
-                <p className="text-xs text-cyan-500 font-medium mt-1">Full Stack AI Developer</p>
+              <div className="border-t border-slate-800 pt-4">
+                <p className="text-xs text-slate-500">© 2026 Pankaj Patel</p>
+                <p className="text-xs text-slate-400 font-medium mt-0.5">
+                  Infinite Soft Tech (Intern)
+                </p>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 };
 

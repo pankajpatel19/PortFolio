@@ -47,7 +47,7 @@ const TypingEffect = ({ texts, typingSpeed = 100, deletingSpeed = 50, delayBetwe
       <motion.span
         animate={{ opacity: [1, 0, 1] }}
         transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-        className="inline-block w-[3px] h-[0.9em] ml-1 bg-cyan-400 align-middle"
+        className="inline-block w-[3px] h-[0.9em] ml-1 bg-white align-middle"
       />
     </span>
   );

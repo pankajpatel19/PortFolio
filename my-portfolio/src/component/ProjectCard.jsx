@@ -1,85 +1,101 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Code2, Sparkles } from "lucide-react";
-import { TiltCard } from "./useTilt";
+import React, { useState } from "react";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
+import { ExternalLink, Github, Code2 } from "lucide-react";
+import BorderBeam from "./animations/BorderBeam";
 
 const ProjectCard = ({ project }) => {
   const {
+    id,
     title,
     category,
     description,
     tech,
     github,
     demo,
-    gradient,
-    glowColor,
     image,
   } = project;
 
+  const mouseX = useMotionValue(-1000);
+  const mouseY = useMotionValue(-1000);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
   return (
-    <TiltCard
-      options={{
-        maxTilt: 10,
-        perspective: 900,
-        glareOpacity: 0.1,
-        scale: 1.02,
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        mouseX.set(-1000);
+        mouseY.set(-1000);
       }}
-      className="bg-slate-900/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-800/80 hover:border-cyan-500/50 flex flex-col transition-colors duration-300 group relative h-full"
+      className="relative bg-[#0b0c13] rounded-2xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-colors duration-300 flex flex-col group h-full shadow-lg"
     >
-      {/* Image Container with Hover zoom */}
-      <div className="relative h-52 overflow-hidden bg-slate-950 flex items-center justify-center">
-        <motion.img
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.5 }}
+      {/* Dynamic Specular Mouse Spotlight (Aceternity / Linear style) */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              400px circle at ${mouseX}px ${mouseY}px,
+              rgba(255, 255, 255, 0.06),
+              transparent 75%
+            )
+          `,
+        }}
+      />
+
+      {/* Featured Border Beam on flagship project */}
+      {id === 1 && (
+        <BorderBeam size={170} duration={8} colorFrom="#ffffff" colorTo="#52525b" />
+      )}
+
+      {/* Image Preview Container */}
+      <div className="relative h-48 overflow-hidden bg-slate-950 flex items-center justify-center">
+        <img
           src={image || "/wandarLust.webp"}
           alt={title}
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = "/wandarLust.webp";
           }}
-          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
         />
 
-        {/* Gradient Overlay */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-t ${gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}
-        />
-
-        {/* Quick Link Badge */}
-        <div className="absolute top-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-350 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 backdrop-blur-md">
-          <Sparkles size={16} className="text-cyan-400" />
+        {/* Category Pill */}
+        <div className="absolute top-3 left-3 bg-[#07080b]/90 border border-zinc-800 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-semibold text-zinc-300 uppercase tracking-wider backdrop-blur-sm z-20">
+          {category}
         </div>
 
-        <div className="absolute top-4 left-4 bg-slate-950/80 border border-slate-850 px-3 py-1 rounded-lg text-xs font-semibold text-cyan-400 capitalize backdrop-blur-md">
-          {category}
+        {/* Hover Inspect Pill */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none z-20">
+          <span className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-zinc-700 text-xs font-mono text-zinc-100 flex items-center gap-1.5 shadow-lg tracking-wide">
+            Inspect Project <ExternalLink size={12} />
+          </span>
         </div>
       </div>
 
-      {/* Gradient accent bar separating image and info */}
-      <div className={`h-[2px] bg-gradient-to-r ${gradient}`} />
-
-      {/* Info Card */}
-      <div className="p-6 flex-grow flex flex-col justify-between">
+      {/* Info Body */}
+      <div className="p-6 flex-grow flex flex-col justify-between relative z-20">
         <div>
-          <div className="flex items-center gap-2 mb-3">
-            <Code2 size={18} className="text-cyan-400" />
-            <h3 className="text-xl font-bold font-display text-white group-hover:text-cyan-400 transition-colors">
-              {title}
-            </h3>
-          </div>
+          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-zinc-200 transition-colors tracking-tight">
+            {title}
+          </h3>
 
-          <p className="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+          <p className="text-slate-400 text-sm leading-relaxed mb-5 font-light">
             {description}
           </p>
         </div>
 
         {/* Tech Chips */}
         <div className="mt-auto">
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-1.5 mb-5">
             {tech.map((t) => (
               <span
                 key={t}
-                className="text-[10px] bg-slate-950 px-2.5 py-1.5 rounded-lg text-gray-400 uppercase tracking-widest font-semibold border border-slate-900 group-hover:border-cyan-500/20 group-hover:text-cyan-400 transition-all duration-300"
+                className="text-[10px] font-mono bg-slate-900 px-2.5 py-1 rounded border border-slate-800 text-slate-400 font-medium group-hover:border-slate-700 transition-colors"
               >
                 {t}
               </span>
@@ -88,27 +104,27 @@ const ProjectCard = ({ project }) => {
         </div>
       </div>
 
-      {/* Bottom Action buttons */}
-      <div className="flex items-center border-t border-slate-850/80 bg-slate-950/50">
+      {/* Bottom Action Buttons */}
+      <div className="flex items-center border-t border-slate-800 bg-[#090a0f] relative z-20">
         {demo ? (
           <>
             <a
               href={demo}
               target="_blank"
               rel="noreferrer"
-              className="w-1/2 py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
+              className="w-1/2 py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
             >
-              <ExternalLink size={15} />
+              <ExternalLink size={13} />
               Live Demo
             </a>
-            <div className="h-10 w-[1px] bg-slate-850/80" />
+            <div className="h-6 w-[1px] bg-slate-800" />
             <a
               href={github}
               target="_blank"
               rel="noreferrer"
-              className="w-1/2 py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
+              className="w-1/2 py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
             >
-              <Github size={15} />
+              <Github size={13} />
               Source Code
             </a>
           </>
@@ -117,14 +133,14 @@ const ProjectCard = ({ project }) => {
             href={github}
             target="_blank"
             rel="noreferrer"
-            className="w-full py-4 text-sm font-semibold flex items-center justify-center gap-2 text-gray-400 hover:text-cyan-400 hover:bg-slate-900/60 transition-all duration-300"
+            className="w-full py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
           >
-            <Github size={15} />
+            <Github size={13} />
             View Source on GitHub
           </a>
         )}
       </div>
-    </TiltCard>
+    </div>
   );
 };
 
