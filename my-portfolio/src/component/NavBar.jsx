@@ -48,7 +48,7 @@ const Navbar = ({ onOpenCommandPalette }) => {
 
   return (
     <nav
-      className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 ${
         scrolled
           ? "bg-black/90 backdrop-blur-md border-b border-zinc-850 shadow-md shadow-black/40"
           : "bg-black/70 backdrop-blur-sm border-b border-zinc-900"
@@ -61,12 +61,20 @@ const Navbar = ({ onOpenCommandPalette }) => {
       />
 
       <div className="max-w-screen-xl mx-auto h-16 px-6 flex justify-between items-center">
-        {/* Logo */}
+        {/* Logo with Round Photo */}
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
           <a href="#home" className="flex items-center gap-2.5 group">
-            <span className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-750 flex items-center justify-center font-bold text-white text-xs shadow-sm group-hover:border-white/50 transition-colors">
-              P
-            </span>
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700 group-hover:border-white transition-colors bg-zinc-900 shadow-sm flex items-center justify-center">
+              <img
+                src="/profilemain.png"
+                alt="Pankaj Patel"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/profile.png";
+                }}
+              />
+            </div>
             <span className="text-base font-bold text-white tracking-tight">
               Pankaj<span className="text-zinc-400">.</span>
             </span>
@@ -179,7 +187,7 @@ const Navbar = ({ onOpenCommandPalette }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-black/75 backdrop-blur-sm z-[105] md:hidden"
               onClick={() => setNav(false)}
             />
 
@@ -188,16 +196,16 @@ const Navbar = ({ onOpenCommandPalette }) => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="fixed top-0 right-0 w-[270px] h-screen bg-[#0b0c13] border-l border-slate-800 z-50 flex flex-col justify-between p-6 md:hidden text-white"
+              className="fixed top-0 right-0 w-[270px] h-screen bg-black border-l border-zinc-800 z-[110] flex flex-col justify-between p-6 md:hidden text-white"
             >
               <div className="flex flex-col gap-6 mt-10">
-                <div className="border-b border-slate-800 pb-3 flex items-center justify-between">
-                  <p className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-widest">
+                <div className="border-b border-zinc-800 pb-3 flex items-center justify-between">
+                  <p className="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-widest">
                     Navigation
                   </p>
                   <button
                     onClick={() => setNav(false)}
-                    className="text-slate-400 hover:text-white"
+                    className="text-zinc-400 hover:text-white"
                   >
                     <X size={18} />
                   </button>
@@ -219,8 +227,8 @@ const Navbar = ({ onOpenCommandPalette }) => {
                           }}
                           className={`text-base font-medium capitalize flex items-center justify-between py-2 px-3 rounded-lg transition-colors ${
                             isActive
-                              ? "text-white bg-slate-800 font-semibold"
-                              : "text-slate-400 hover:text-white hover:bg-slate-900"
+                              ? "text-white bg-zinc-900 font-semibold"
+                              : "text-zinc-400 hover:text-white hover:bg-zinc-900/60"
                           }`}
                         >
                           {link}

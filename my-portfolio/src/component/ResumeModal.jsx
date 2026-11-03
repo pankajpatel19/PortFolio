@@ -38,7 +38,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[200] bg-black/85 backdrop-blur-md"
           />
 
           {/* Modal Panel */}
@@ -48,7 +48,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-4 sm:inset-8 lg:inset-12 z-[101] flex flex-col rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#0c0d14]"
+            className="fixed inset-4 sm:inset-8 lg:inset-12 z-[201] flex flex-col rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-950"
           >
             {/* Header bar */}
             <div className="flex items-center justify-between gap-4 px-5 py-3.5 bg-slate-900 border-b border-slate-800 flex-shrink-0">

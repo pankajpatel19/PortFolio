@@ -31,13 +31,19 @@ body {
   background-color: #000000;
   color: #f4f4f5;
   font-family: var(--font-sans);
-  overflow-x: hidden;
 }
 
 /* Subtle architectural dot grid */
 .bg-grid-subtle {
   background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+/* Linear/Apple Sticky Stacked Card Effect */
+.sticky-stack-card {
+  position: sticky;
+  top: min(0px, calc(100vh - 100%));
+  will-change: transform;
 }
 
 /* Border Beam Animation (Magic UI) */

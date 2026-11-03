@@ -203,8 +203,8 @@ const Skill = () => {
   });
 
   return (
-    <section id="skills" className="w-full py-24 bg-[#07080b] text-white relative border-t border-zinc-900">
-      <div className="max-w-screen-xl mx-auto px-6 flex flex-col justify-center w-full">
+    <section id="skills" className="w-full py-20 sm:py-24 bg-black text-white relative border-t border-zinc-900">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex flex-col justify-center w-full">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

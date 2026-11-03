@@ -40,7 +40,7 @@ const TypingEffect = ({ texts, typingSpeed = 100, deletingSpeed = 50, delayBetwe
 
   return (
     <span className="relative">
-      <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent font-bold">
+      <span className="text-zinc-200 font-bold">
         {currentText}
       </span>
       {/* Animated blinking cursor */}

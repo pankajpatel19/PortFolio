@@ -95,8 +95,8 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="w-full py-24 bg-[#07080b] text-white relative border-t border-zinc-900">
-      <div className="max-w-screen-xl mx-auto px-6 flex flex-col justify-center w-full">
+    <section id="contact" className="w-full py-20 sm:py-24 bg-black text-white relative border-t border-zinc-900">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex flex-col justify-center w-full">
         {/* Section Header */}
         <div className="flex flex-col gap-2 mb-12">
           <div className="font-mono text-[11px] text-zinc-400 font-semibold tracking-wider uppercase">
@@ -131,7 +131,7 @@ const Contact = () => {
               {contactInfo.map((info) => (
                 <div
                   key={info.title}
-                  className="flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-[#0b0c13] hover:border-slate-700 transition-colors shadow-sm"
+                  className="flex items-center justify-between p-4 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 transition-colors shadow-sm"
                 >
                   <a
                     href={info.link}
@@ -143,7 +143,7 @@ const Contact = () => {
                       {info.icon}
                     </div>
                     <div>
-                      <p className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold">
+                      <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider font-semibold">
                         {info.title}
                       </p>
                       <p className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">
@@ -155,7 +155,7 @@ const Contact = () => {
                   {info.actionable && (
                     <button
                       onClick={handleCopyEmail}
-                      className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                      className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
                       title="Copy email address"
                     >
                       {copiedEmail ? <Check size={14} className="text-white" /> : <Copy size={14} />}
@@ -167,7 +167,7 @@ const Contact = () => {
 
             {/* Social Panel */}
             <div className="pt-2">
-              <h4 className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h4 className="text-xs font-mono font-semibold text-zinc-500 uppercase tracking-wider mb-3">
                 Social Profiles
               </h4>
               <div className="flex gap-2.5">
@@ -179,7 +179,7 @@ const Contact = () => {
                       rel="noreferrer"
                       whileHover={{ scale: 1.08, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="p-2.5 rounded-lg bg-[#0b0c13] border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 transition-colors shadow-sm block"
+                      className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors shadow-sm block"
                       title={social.name}
                     >
                       {social.icon}
@@ -198,7 +198,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             className="lg:col-span-7"
           >
-            <div className="relative p-7 rounded-2xl bg-[#0b0c13] border border-slate-800 shadow-xl overflow-hidden">
+            <div className="relative p-7 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-xl overflow-hidden">
               <BorderBeam size={220} duration={9} colorFrom="#ffffff" colorTo="#52525b" />
 
               <h3 className="text-lg font-bold font-display text-white mb-6">
@@ -217,14 +217,14 @@ const Contact = () => {
                     <h4 className="text-xl font-bold font-display text-white mb-1">
                       Message Dispatched!
                     </h4>
-                    <p className="text-slate-400 text-sm max-w-xs leading-relaxed font-light">
+                    <p className="text-zinc-400 text-sm max-w-xs leading-relaxed font-light">
                       Thanks for reaching out! I've received your inquiry and will follow up shortly.
                     </p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4 text-left">
                     <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider">
+                      <label className="block text-xs font-mono text-zinc-400 mb-1.5 uppercase tracking-wider">
                         Your Name
                       </label>
                       <input
@@ -234,12 +234,12 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         placeholder="John Doe"
-                        className="w-full px-4 py-3 bg-[#08090f] border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-white/10 transition-colors"
+                        className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-white/10 transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider">
+                      <label className="block text-xs font-mono text-zinc-400 mb-1.5 uppercase tracking-wider">
                         Email Address
                       </label>
                       <input
@@ -249,12 +249,12 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         placeholder="john@example.com"
-                        className="w-full px-4 py-3 bg-[#08090f] border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-white/10 transition-colors"
+                        className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-white/10 transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider">
+                      <label className="block text-xs font-mono text-zinc-400 mb-1.5 uppercase tracking-wider">
                         Message
                       </label>
                       <textarea
@@ -264,14 +264,14 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         placeholder="Project requirements, inquiry or role details..."
-                        className="w-full px-4 py-3 bg-[#08090f] border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-white/10 transition-colors resize-none"
+                        className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-white/10 transition-colors resize-none"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={status === "sending"}
-                      className="w-full py-3.5 bg-white text-slate-950 font-semibold rounded-xl text-sm shadow-sm hover:bg-slate-200 flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+                      className="w-full py-3.5 bg-white text-zinc-950 font-semibold rounded-xl text-sm shadow-sm hover:bg-zinc-200 flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
                     >
                       {status === "sending" ? (
                         <>

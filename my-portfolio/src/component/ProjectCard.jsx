@@ -31,7 +31,7 @@ const ProjectCard = ({ project }) => {
         mouseX.set(-1000);
         mouseY.set(-1000);
       }}
-      className="relative bg-[#0b0c13] rounded-2xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-colors duration-300 flex flex-col group h-full shadow-lg"
+      className="relative bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors duration-300 flex flex-col group h-full shadow-lg"
     >
       {/* Dynamic Specular Mouse Spotlight (Aceternity / Linear style) */}
       <motion.div
@@ -95,7 +95,7 @@ const ProjectCard = ({ project }) => {
             {tech.map((t) => (
               <span
                 key={t}
-                className="text-[10px] font-mono bg-slate-900 px-2.5 py-1 rounded border border-slate-800 text-slate-400 font-medium group-hover:border-slate-700 transition-colors"
+                className="text-[10px] font-mono bg-zinc-900 px-2.5 py-1 rounded border border-zinc-800 text-zinc-400 font-medium group-hover:border-zinc-700 transition-colors"
               >
                 {t}
               </span>
@@ -105,24 +105,24 @@ const ProjectCard = ({ project }) => {
       </div>
 
       {/* Bottom Action Buttons */}
-      <div className="flex items-center border-t border-slate-800 bg-[#090a0f] relative z-20">
+      <div className="flex items-center border-t border-zinc-800 bg-zinc-950 relative z-20">
         {demo ? (
           <>
             <a
               href={demo}
               target="_blank"
               rel="noreferrer"
-              className="w-1/2 py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+              className="w-1/2 py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
             >
               <ExternalLink size={13} />
               Live Demo
             </a>
-            <div className="h-6 w-[1px] bg-slate-800" />
+            <div className="h-6 w-[1px] bg-zinc-800" />
             <a
               href={github}
               target="_blank"
               rel="noreferrer"
-              className="w-1/2 py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+              className="w-1/2 py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
             >
               <Github size={13} />
               Source Code
@@ -133,7 +133,7 @@ const ProjectCard = ({ project }) => {
             href={github}
             target="_blank"
             rel="noreferrer"
-            className="w-full py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+            className="w-full py-3.5 text-xs font-semibold flex items-center justify-center gap-1.5 text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
           >
             <Github size={13} />
             View Source on GitHub

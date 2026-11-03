@@ -36,8 +36,8 @@ const Project = () => {
     : filteredProjects.slice(0, initialLimit);
 
   return (
-    <section id="projects" className="w-full py-24 bg-[#07080b] text-white relative border-t border-zinc-900">
-      <div className="max-w-screen-xl px-6 mx-auto flex flex-col justify-center w-full">
+    <section id="projects" className="w-full py-20 sm:py-24 bg-[#07080b] text-white relative border-t border-zinc-900">
+      <div className="max-w-screen-xl px-4 sm:px-6 mx-auto flex flex-col justify-center w-full">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

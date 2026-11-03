@@ -64,8 +64,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#050608] text-white relative overflow-hidden border-t border-slate-800/80">
-      <div className="max-w-screen-xl mx-auto px-6 py-14 relative z-10">
+    <footer className="bg-black text-white relative overflow-hidden border-t border-zinc-900">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-12 sm:py-14 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand/Quote */}
           <div className="space-y-3 text-left">
@@ -73,21 +73,21 @@ const Footer = () => {
               Pankaj Patel
             </h2>
             {/* Open to Work badge */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-zinc-700 bg-zinc-900/60 text-[10px] font-mono font-semibold text-zinc-300 tracking-wider uppercase">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-zinc-700 bg-zinc-900 text-[10px] font-mono font-semibold text-zinc-300 tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               Open to Work
             </div>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed font-light">
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-light">
               Full Stack Developer · Backend-Focused · MERN Stack. Building scalable web architectures, REST APIs, and production applications.
             </p>
-            <p className="text-xs font-mono text-slate-500">
+            <p className="text-xs font-mono text-zinc-500">
               Building reliably, step by step.
             </p>
           </div>
 
           {/* Navigation Links */}
           <div className="text-left">
-            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-4">
+            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 mb-4">
               Explore
             </h3>
             <ul className="space-y-2">
@@ -99,7 +99,7 @@ const Footer = () => {
                       e.preventDefault();
                       document.getElementById(link.link)?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="text-slate-400 hover:text-white transition-colors text-xs font-medium"
+                    className="text-zinc-400 hover:text-white transition-colors text-xs font-medium"
                   >
                     {link.name}
                   </a>
@@ -110,7 +110,7 @@ const Footer = () => {
 
           {/* Contact Details */}
           <div className="text-left">
-            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-4">
+            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 mb-4">
               Communication
             </h3>
             <ul className="space-y-2.5">
@@ -120,9 +120,9 @@ const Footer = () => {
                     href={detail.link}
                     target={detail.text.includes("India") ? "_blank" : "_self"}
                     rel="noreferrer"
-                    className="text-slate-400 hover:text-white transition-colors text-xs flex items-center gap-2.5"
+                    className="text-zinc-400 hover:text-white transition-colors text-xs flex items-center gap-2.5"
                   >
-                    <span className="text-slate-500">{detail.icon}</span>
+                    <span className="text-zinc-500">{detail.icon}</span>
                     {detail.text}
                   </a>
                 </li>
@@ -132,7 +132,7 @@ const Footer = () => {
 
           {/* Socials & Interactive Coffee Box */}
           <div className="text-left">
-            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-4">
+            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 mb-4">
               Social Channels
             </h3>
             <div className="flex gap-2 mb-4">
@@ -142,7 +142,7 @@ const Footer = () => {
                   href={social.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2.5 bg-[#0b0c13] border border-slate-800 rounded-lg text-slate-400 hover:text-white hover:border-slate-700 transition-colors shadow-sm"
+                  className="p-2.5 bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors shadow-sm"
                   title={social.name}
                 >
                   {social.icon}
@@ -154,7 +154,7 @@ const Footer = () => {
             <div
               onClick={handleCoffeeHover}
               onMouseEnter={handleCoffeeHover}
-              className="p-3 bg-[#0b0c13] border border-slate-800 rounded-xl flex items-center gap-3 shadow-inner cursor-pointer select-none group hover:border-slate-700 transition-colors"
+              className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center gap-3 shadow-inner cursor-pointer select-none group hover:border-zinc-700 transition-colors"
               title="Click or hover to add coffee!"
             >
               <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center border border-zinc-800 text-zinc-400 group-hover:scale-110 transition-transform">
@@ -163,25 +163,25 @@ const Footer = () => {
               <div className="text-left">
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-bold text-white font-mono">{coffeeCount}</span>
-                  <span className="text-[10px] text-slate-500 font-mono uppercase">Cups Fuelled</span>
+                  <span className="text-[10px] text-zinc-500 font-mono uppercase">Cups Fuelled</span>
                 </div>
-                <p className="text-[10px] text-slate-500">Click to add caffeine</p>
+                <p className="text-[10px] text-zinc-500">Click to add caffeine</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Separator Line */}
-        <div className="my-8 h-[1px] bg-slate-800/80" />
+        <div className="my-8 h-[1px] bg-zinc-800" />
 
         {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-mono">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-zinc-500 font-mono">
           <p className="flex items-center gap-1.5">
             © {currentYear} Pankaj Patel — Crafted with
             <Heart size={12} className="text-zinc-400 fill-current" />
             in Ahmedabad, India
           </p>
-          <p className="text-[11px] text-slate-600">
+          <p className="text-[11px] text-zinc-600">
             Engineered for performance & accessibility
           </p>
         </div>
