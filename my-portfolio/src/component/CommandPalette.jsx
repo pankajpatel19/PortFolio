@@ -62,7 +62,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenResume }) => {
         },
         {
           id: "nav-exp",
-          label: "Experience & Infinite Soft Tech Internship",
+          label: "Experience & Education Timeline",
           icon: <Briefcase size={16} />,
           action: () => {
             document

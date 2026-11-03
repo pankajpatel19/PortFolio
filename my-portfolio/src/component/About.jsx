@@ -103,7 +103,7 @@ const About = () => {
           <div className="w-12 h-1 bg-white rounded-full mt-1" />
         </div>
 
-        {/* Narrative & Internship Spotlight Bento Grid */}
+        {/* Narrative & Experience Spotlight Bento Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
           {/* Main Narrative */}
           <motion.div
@@ -123,11 +123,11 @@ const About = () => {
                 Full Stack Developer
               </span>{" "}
               specializing in the MERN stack, robust REST API design, and scalable backend systems.
-              I completed my{" "}
+              With professional experience at{" "}
               <span className="text-white font-semibold underline underline-offset-4 decoration-zinc-600">
-                Full Stack Developer Internship at Infinite Soft Tech (MERN Stack)
-              </span>{" "}
-              (June 2026 – Sept 2026), where I developed reusable React.js components, built Express.js REST APIs with CRUD operations, designed MongoDB/MySQL schemas, and implemented JWT authentication.
+                Infinite Soft Tech (MERN Stack)
+              </span>
+              , I engineer production-grade web systems—developing reusable React.js components, building Express.js REST APIs with CRUD operations, designing MongoDB/MySQL schemas, and implementing JWT authentication.
             </p>
             <p>
               My core technical stack includes{" "}
@@ -141,15 +141,15 @@ const About = () => {
               <span className="text-white font-semibold">Model Context Protocol (MCP)</span>.
             </p>
             <p>
-              Currently pursuing my <span className="text-white font-semibold">Master of Computer Applications (MCA)</span> at{" "}
+              Completed my <span className="text-white font-semibold">Master of Computer Applications (MCA)</span> from{" "}
               <span className="text-white font-semibold">L.D. College of Engineering, Ahmedabad</span>{" "}
-              (CGPA: 8.41, ranked in Top 5 students in Semester 2), with a solid academic foundation in DSA, DBMS, Operating Systems, and Software Engineering.
+              (CGPA: 8.41, ranked in Top 5 students in Semester 2), backed by a strong academic foundation in DSA, DBMS, Operating Systems, and Software Engineering.
             </p>
           </motion.div>
 
           {/* Right Column: Experience Spotlight & Stats */}
           <div className="lg:col-span-5 flex flex-col gap-4">
-            {/* Infinite Soft Tech Internship Card with Luminous Border Beam */}
+            {/* Infinite Soft Tech Experience Card with Luminous Border Beam */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ const About = () => {
                 Infinite Soft Tech
               </h4>
               <p className="text-sm font-medium text-zinc-300 mb-2">
-                Full Stack Developer Intern (MERN Stack)
+                Full Stack Developer (MERN Stack)
               </p>
               <p className="text-xs text-zinc-400 leading-relaxed font-light">
                 Developed reusable React components, created Express CRUD APIs, modeled MongoDB/MySQL schemas, integrated JWT authentication, and validated endpoints with Postman.

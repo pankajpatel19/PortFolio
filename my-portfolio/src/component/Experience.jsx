@@ -6,11 +6,11 @@ const experiences = [
   {
     id: 1,
     type: "work",
-    title: "Full Stack Developer Intern",
+    title: "Full Stack Developer",
     company: "Infinite Soft Tech (MERN Stack)",
     location: "Ahmedabad, India",
     period: "June 2026 – Sept 2026",
-    badge: "Internship",
+    badge: "Work Experience",
     bullets: [
       "Developed reusable React.js UI components, forms, and pages based on project requirements and design specs.",
       "Built and maintained REST APIs using Node.js and Express.js, including routes, controllers, and CRUD operations.",

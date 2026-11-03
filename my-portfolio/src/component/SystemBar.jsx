@@ -38,7 +38,7 @@ const SystemBar = ({ onOpenCommandPalette }) => {
           <span className="hidden md:inline-block text-zinc-700">|</span>
           <span className="hidden md:flex items-center gap-1 text-zinc-300">
             <Briefcase size={11} className="text-zinc-300" />
-            Full Stack Intern @ Infinite Soft Tech (June – Sept 2026)
+            Full Stack Developer @ Infinite Soft Tech · MCA Graduate
           </span>
         </div>
 

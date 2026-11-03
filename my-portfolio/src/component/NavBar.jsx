@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, ArrowUpRight, Terminal } from "lucide-react";
 
 const Navbar = ({ onOpenCommandPalette }) => {
@@ -234,10 +234,10 @@ const Navbar = ({ onOpenCommandPalette }) => {
                 </ul>
               </div>
 
-              <div className="border-t border-slate-800 pt-4">
-                <p className="text-xs text-slate-500">© 2026 Pankaj Patel</p>
-                <p className="text-xs text-slate-400 font-medium mt-0.5">
-                  Infinite Soft Tech (Intern)
+              <div className="border-t border-zinc-800 pt-4">
+                <p className="text-xs text-zinc-500">© 2026 Pankaj Patel</p>
+                <p className="text-xs text-zinc-400 font-medium mt-0.5">
+                  Full Stack Developer · MCA Graduate
                 </p>
               </div>
             </motion.div>

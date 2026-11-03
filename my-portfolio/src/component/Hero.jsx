@@ -275,11 +275,15 @@ server.tool("search_inbox", { query: z.string() }, async ({ query }) => {
             <span className="text-white font-medium">
               Amazon Bedrock & Pinecone
             </span>
-            . Recently completed a Full Stack Developer Internship at{" "}
+            . Completed{" "}
+            <span className="text-white font-medium">
+              Master of Computer Applications (MCA)
+            </span>{" "}
+            with hands-on engineering experience at{" "}
             <span className="text-white font-medium underline underline-offset-4 decoration-zinc-500">
               Infinite Soft Tech (MERN Stack)
-            </span>{" "}
-            (June 2026 – Sept 2026).
+            </span>
+            .
           </motion.p>
 
           {/* CTA Buttons with Magnetic Spring Effect */}
