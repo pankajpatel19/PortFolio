@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import About from "./component/About";
 import Contact from "./component/Contact";
 import Footer from "./component/Footer";
 import Hero from "./component/Hero";
@@ -37,7 +36,6 @@ function App() {
         <ScrollToTop />
         <NavBar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
         <Hero />
-        <About />
         <Experience />
         <Skill />
         <Project />
