@@ -29,7 +29,7 @@ const experiences = [
     company: "L.D. College of Engineering",
     location: "Ahmedabad, Gujarat",
     period: "2024 – 2026",
-    badge: "CGPA: 8.41 · Top 5 Ranker",
+    badge: "CGPA: 8.07 · Top 5 Ranker",
     bullets: [
       "Ranked in Top 5 students in MCA Semester 2 at L.D. College of Engineering.",
       "Comprehensive coursework in Data Structures & Algorithms (DSA), Database Management Systems (DBMS), Operating Systems (OS), and Software Engineering.",

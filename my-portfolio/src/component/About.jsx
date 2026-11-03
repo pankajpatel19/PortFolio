@@ -143,7 +143,7 @@ const About = () => {
             <p>
               Completed my <span className="text-white font-semibold">Master of Computer Applications (MCA)</span> from{" "}
               <span className="text-white font-semibold">L.D. College of Engineering, Ahmedabad</span>{" "}
-              (CGPA: 8.41, ranked in Top 5 students in Semester 2), backed by a strong academic foundation in DSA, DBMS, Operating Systems, and Software Engineering.
+              (CGPA: 8.07, ranked in Top 5 students in Semester 2), backed by a strong academic foundation in DSA, DBMS, Operating Systems, and Software Engineering.
             </p>
           </motion.div>
 
@@ -199,7 +199,7 @@ const About = () => {
                 className="p-5 bg-zinc-950 border border-zinc-800 rounded-xl flex flex-col justify-center shadow-md hover:border-zinc-700 transition-colors"
               >
                 <h4 className="text-2xl sm:text-3xl font-display font-black text-white mb-1 tracking-tight">
-                  8.41
+                  8.07
                 </h4>
                 <p className="text-[10px] font-mono font-semibold text-zinc-400 uppercase tracking-wider">
                   MCA CGPA (Top 5)

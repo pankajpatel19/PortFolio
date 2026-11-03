@@ -186,7 +186,7 @@ server.tool("search_inbox", { query: z.string() }, async ({ query }) => {
   const stats = [
     { to: 10, suffix: "+", label: "Projects Built" },
     { to: 500, suffix: "+", label: "Git Commits" },
-    { to: 8, suffix: ".41", label: "MCA CGPA (Top 5)" },
+    { to: 8, suffix: ".07", label: "MCA CGPA (Top 5)" },
   ];
 
   return (
